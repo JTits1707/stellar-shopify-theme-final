@@ -1,0 +1,26 @@
+.floating-elements .floating {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  opacity: 0.3;
+  animation: float 12s infinite linear;
+}
+
+.floating.cassette {
+  background: url('{{ "cassette.png" | asset_url }}') no-repeat center/contain;
+  top: 10%; left: 20%;
+}
+.floating.note {
+  background: url('{{ "note.png" | asset_url }}') no-repeat center/contain;
+  top: 40%; left: 70%;
+}
+.floating.glitch {
+  background: url('{{ "glitch.png" | asset_url }}') no-repeat center/contain;
+  top: 70%; left: 30%;
+}
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0); }
+}

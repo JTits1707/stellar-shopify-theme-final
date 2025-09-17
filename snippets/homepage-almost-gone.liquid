@@ -1,0 +1,378 @@
+{% comment %}
+  Homepage Almost Gone Snippet
+  FOMO psychology element for low stock products
+{% endcomment %}
+
+{%- liquid
+  assign low_stock_products = collections.featured.products | where: 'available'
+  assign almost_gone_products = ''
+  
+  for product in low_stock_products
+    for variant in product.variants
+      if variant.inventory_quantity <= 5 and variant.available
+        assign almost_gone_products = almost_gone_products | append: product.id | append: ','
+        break
+      endif
+    endfor
+  endfor
+  
+  assign almost_gone_array = almost_gone_products | split: ','
+  assign almost_gone_count = almost_gone_array.size
+-%}
+
+{%- if almost_gone_count > 0 -%}
+  <div class="almost-gone-banner" data-section-type="almost-gone">
+    <div class="almost-gone-content">
+      <div class="urgency-indicator">
+        <i class="fas fa-exclamation-triangle"></i>
+        <span class="urgency-text">TRANSMISSION ALERT</span>
+      </div>
+      
+      <div class="almost-gone-message">
+        <span class="stock-count">{{ almost_gone_count }}</span> 
+        {% if almost_gone_count == 1 %}
+          transmission almost gone
+        {% else %}
+          transmissions almost gone
+        {% endif %}
+      </div>
+      
+      <div class="almost-gone-products">
+        {%- for product in collections.featured.products limit: 3 -%}
+          {%- assign has_low_stock = false -%}
+          {%- for variant in product.variants -%}
+            {%- if variant.inventory_quantity <= 5 and variant.available -%}
+              {%- assign has_low_stock = true -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
+          
+          {%- if has_low_stock -%}
+            <div class="almost-gone-item">
+              <div class="product-image-mini">
+                {%- if product.featured_image -%}
+                  <img src="{{ product.featured_image | image_url: width: 60 }}" 
+                       alt="{{ product.title | escape }}"
+                       loading="lazy">
+                {%- else -%}
+                  <div class="placeholder-image">
+                    <i class="fas fa-tshirt"></i>
+                  </div>
+                {%- endif -%}
+              </div>
+              
+              <div class="product-info-mini">
+                <h4 class="product-title-mini">{{ product.title | truncate: 25 }}</h4>
+                <div class="stock-info">
+                  {%- assign lowest_stock = 999 -%}
+                  {%- for variant in product.variants -%}
+                    {%- if variant.available and variant.inventory_quantity < lowest_stock -%}
+                      {%- assign lowest_stock = variant.inventory_quantity -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                  
+                  {%- if lowest_stock <= 3 -%}
+                    <span class="stock-critical">{{ lowest_stock }} left</span>
+                  {%- else -%}
+                    <span class="stock-low">Low stock</span>
+                  {%- endif -%}
+                </div>
+              </div>
+              
+              <a href="{{ product.url }}" class="quick-grab-btn">
+                <i class="fas fa-rocket"></i>
+                Grab Now
+              </a>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+      
+      <div class="almost-gone-cta">
+        <a href="{{ collections.featured.url | default: '/collections/all' }}" class="btn-urgent">
+          <i class="fas fa-satellite-dish"></i>
+          View All Limited Stock
+        </a>
+      </div>
+    </div>
+    
+    <button class="almost-gone-close" aria-label="Close banner">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+
+  <style>
+    .almost-gone-banner {
+      background: linear-gradient(135deg, 
+        rgba(255, 0, 128, 0.1) 0%, 
+        rgba(0, 255, 255, 0.1) 100%);
+      border: 1px solid var(--neon-magenta);
+      border-radius: 8px;
+      padding: 1rem;
+      margin: 1rem 0;
+      position: relative;
+      animation: urgency-pulse 2s ease-in-out infinite;
+    }
+    
+    .almost-gone-content {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    
+    .urgency-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--neon-orange);
+    }
+    
+    .urgency-indicator i {
+      animation: warning-blink 1s ease-in-out infinite;
+    }
+    
+    .urgency-text {
+      font-weight: bold;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+    }
+    
+    .almost-gone-message {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+    
+    .stock-count {
+      color: var(--neon-magenta);
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    
+    .almost-gone-products {
+      display: flex;
+      gap: 1rem;
+      flex: 1;
+      overflow-x: auto;
+      padding: 0.5rem 0;
+    }
+    
+    .almost-gone-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      padding: 0.75rem;
+      min-width: 200px;
+      transition: all 0.3s ease;
+    }
+    
+    .almost-gone-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--neon-cyan);
+      transform: translateY(-2px);
+    }
+    
+    .product-image-mini {
+      width: 40px;
+      height: 40px;
+      border-radius: 4px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    
+    .product-image-mini img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .placeholder-image {
+      width: 100%;
+      height: 100%;
+      background: var(--surface-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+    }
+    
+    .product-info-mini {
+      flex: 1;
+      min-width: 0;
+    }
+    
+    .product-title-mini {
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin: 0 0 0.25rem 0;
+      color: var(--text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .stock-info {
+      font-size: 0.75rem;
+    }
+    
+    .stock-critical {
+      color: var(--neon-orange);
+      font-weight: bold;
+      animation: stock-warning 1.5s ease-in-out infinite;
+    }
+    
+    .stock-low {
+      color: var(--neon-yellow);
+      font-weight: 600;
+    }
+    
+    .quick-grab-btn {
+      background: var(--neon-magenta);
+      color: var(--void-black);
+      border: none;
+      border-radius: 4px;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.75rem;
+      font-weight: bold;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+    
+    .quick-grab-btn:hover {
+      background: var(--neon-cyan);
+      transform: scale(1.05);
+    }
+    
+    .almost-gone-cta {
+      margin-left: auto;
+    }
+    
+    .btn-urgent {
+      background: linear-gradient(45deg, var(--neon-orange), var(--neon-magenta));
+      color: var(--void-black);
+      border: none;
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      font-weight: bold;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+      animation: cta-glow 2s ease-in-out infinite;
+    }
+    
+    .btn-urgent:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(255, 0, 128, 0.5);
+    }
+    
+    .almost-gone-close {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 1rem;
+      cursor: pointer;
+      padding: 0.25rem;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+    
+    .almost-gone-close:hover {
+      color: var(--neon-magenta);
+      background: rgba(255, 255, 255, 0.1);
+    }
+    
+    @keyframes urgency-pulse {
+      0%, 100% { 
+        box-shadow: 0 0 10px rgba(255, 0, 128, 0.3);
+      }
+      50% { 
+        box-shadow: 0 0 20px rgba(255, 0, 128, 0.6);
+      }
+    }
+    
+    @keyframes warning-blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    
+    @keyframes stock-warning {
+      0%, 100% { 
+        color: var(--neon-orange);
+        text-shadow: 0 0 5px rgba(255, 165, 0, 0.5);
+      }
+      50% { 
+        color: var(--neon-red);
+        text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+      }
+    }
+    
+    @keyframes cta-glow {
+      0%, 100% { 
+        box-shadow: 0 0 10px rgba(255, 0, 128, 0.3);
+      }
+      50% { 
+        box-shadow: 0 0 20px rgba(255, 0, 128, 0.6);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .almost-gone-content {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+      }
+      
+      .almost-gone-products {
+        order: 2;
+      }
+      
+      .almost-gone-cta {
+        order: 3;
+        margin-left: 0;
+        text-align: center;
+      }
+      
+      .almost-gone-item {
+        min-width: 180px;
+      }
+    }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const almostGoneBanner = document.querySelector('.almost-gone-banner');
+      const closeBtn = document.querySelector('.almost-gone-close');
+      
+      if (closeBtn && almostGoneBanner) {
+        closeBtn.addEventListener('click', function() {
+          almostGoneBanner.style.animation = 'fadeOut 0.3s ease-out';
+          setTimeout(() => {
+            almostGoneBanner.style.display = 'none';
+          }, 300);
+          
+          // Store dismissal in session storage
+          sessionStorage.setItem('almostGoneDismissed', 'true');
+        });
+      }
+      
+      // Check if banner was previously dismissed
+      if (sessionStorage.getItem('almostGoneDismissed') === 'true') {
+        if (almostGoneBanner) {
+          almostGoneBanner.style.display = 'none';
+        }
+      }
+    });
+  </script>
+{%- endif -%}

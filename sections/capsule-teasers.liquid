@@ -1,0 +1,41 @@
+{% comment %}
+  Capsule Teasers Section
+  Grid of teaser cards for upcoming capsules
+{% endcomment %}
+<section class="capsule-teasers container mx-auto py-16">
+  <h2 class="text-center text-3xl font-orbitron gradient-text mb-10">Upcoming Capsules</h2>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    {% for block in section.blocks %}
+      <div class="capsule-card bg-black bg-opacity-60 border border-purple-800 rounded-lg p-6 text-center hover:shadow-neon">
+        {% if block.settings.image %}
+          <img src="{{ block.settings.image | image_url: width: 400 }}" alt="{{ block.settings.title }}" class="mx-auto mb-4 rounded-md">
+        {% endif %}
+        <h3 class="text-xl font-bold mb-2">{{ block.settings.title }}</h3>
+        <p class="text-gray-400 mb-4">{{ block.settings.subtitle }}</p>
+        {% if block.settings.cta_link %}
+          <a href="{{ block.settings.cta_link }}" class="btn-stellar">{{ block.settings.cta_text }}</a>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Capsule Teasers",
+  "blocks": [
+    {
+      "type": "teaser",
+      "name": "Teaser",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Teaser Image" },
+        { "type": "text", "id": "title", "label": "Teaser Title" },
+        { "type": "text", "id": "subtitle", "label": "Teaser Subtitle" },
+        { "type": "url", "id": "cta_link", "label": "CTA Link" },
+        { "type": "text", "id": "cta_text", "label": "CTA Text", "default": "Learn More" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Capsule Teasers" }]
+}
+{% endschema %}

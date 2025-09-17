@@ -1,0 +1,37 @@
+{% comment %}
+  Hero Cosmic Section
+  Cosmic homepage hero with headline, tagline, CTA
+{% endcomment %}
+<section class="hero-cosmic text-center py-20 relative overflow-hidden">
+  <div class="container mx-auto">
+    <h1 class="hero-title font-orbitron text-5xl md:text-7xl font-bold mb-4 gradient-text">
+      TRANSMISSION RECEIVED
+    </h1>
+    <p class="hero-subtitle text-lg md:text-xl text-gray-300 mb-6">
+      Sound. Style. Transmissions of Cosmic Identity.
+    </p>
+    <a href="/collections/all" class="btn-stellar inline-flex items-center">
+      <i class="fas fa-rocket mr-2"></i> EXPLORE THE VAULT
+    </a>
+  </div>
+</section>
+
+<style>
+.hero-cosmic { background: linear-gradient(135deg,#0D0D0D,#1a0a1a); }
+.gradient-text { background: linear-gradient(90deg,#E13CFA,#28A8D6); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.btn-stellar { background:linear-gradient(45deg,#E13CFA,#F4FF30); color:#0D0D0D; padding:1rem 2rem; border-radius:8px; font-family:Orbitron,sans-serif; font-weight:700; transition:.3s; }
+.btn-stellar:hover { box-shadow:0 0 25px rgba(225,60,250,.5); transform:translateY(-2px); }
+</style>
+
+{% schema %}
+{
+  "name": "Hero Cosmic",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Hero Title", "default": "TRANSMISSION RECEIVED" },
+    { "type": "text", "id": "subtitle", "label": "Hero Subtitle", "default": "Sound. Style. Transmissions of Cosmic Identity." },
+    { "type": "url", "id": "cta_link", "label": "CTA Link", "default": "/collections/all" },
+    { "type": "text", "id": "cta_text", "label": "CTA Text", "default": "EXPLORE THE VAULT" }
+  ],
+  "presets": [{ "name": "Hero Cosmic" }]
+}
+{% endschema %}

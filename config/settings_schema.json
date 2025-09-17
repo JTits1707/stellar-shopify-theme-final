@@ -1,0 +1,62 @@
+[
+  {
+    "name": "Theme settings",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_announcement",
+        "label": "Show announcement bar",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "announcement_cta",
+        "label": "Announcement CTA text",
+        "default": "Join Signal Seekers"
+      },
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "Primary color",
+        "default": "#E13CFA"
+      },
+      {
+        "type": "color",
+        "id": "color_secondary",
+        "label": "Secondary color",
+        "default": "#28A8D6"
+      },
+      {
+        "type": "range",
+        "id": "low_stock_threshold",
+        "label": "Low stock warning threshold",
+        "min": 1,
+        "max": 25,
+        "step": 1,
+        "default": 5
+      }
+    ]
+  },
+  {
+    "name": "Header",
+    "settings": [
+      {
+        "type": "text",
+        "id": "header_tagline",
+        "label": "Header tagline",
+        "default": "Transmissions from the Edge"
+      }
+    ]
+  },
+  {
+    "name": "Footer",
+    "settings": [
+      {
+        "type": "text",
+        "id": "footer_note",
+        "label": "Footer note",
+        "default": "This message will repeat until reality stabilizes."
+      }
+    ]
+  }
+]

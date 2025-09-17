@@ -1,0 +1,29 @@
+{% comment %}
+  Stellar Reverb – Mailchimp Popup Embed
+  Loads Mailchimp universal popup form and exposes JS trigger
+  Usage: include this snippet in theme.liquid before </body>
+{% endcomment %}
+
+<!-- Mailchimp Universal Popup Embed -->
+<div id="mc_embed_shell" style="display:none;"></div>
+
+<script id="mcjs">
+(function(c,h,i,m,p){
+  m=c.createElement(h),p=c.getElementsByTagName(h)[0];
+  m.async=1;m.src=i;
+  p.parentNode.insertBefore(m,p);
+})(document,"script","https://chimpstatic.com/mcjs-connected/js/users/YOUR-UUID-HERE/YOUR-ID-HERE.js");
+</script>
+
+<script>
+  // Wrap Mailchimp popup API in a global helper
+  window.MAILCHIMP_POPUP = {
+    open: function() {
+      if (typeof mcModal !== 'undefined') {
+        mcModal.open();
+      } else {
+        console.warn("Mailchimp popup script not yet loaded.");
+      }
+    }
+  };
+</script>

@@ -1,0 +1,37 @@
+{
+  "general": {
+    "meta": {
+      "tags": "Tagged \"{{ tags }}\"",
+      "page": "Page {{ page }}"
+    },
+    "404": {
+      "title": "Page not found",
+      "subtext": "The signal you seek has drifted beyond this frequency."
+    }
+  },
+  "products": {
+    "product": {
+      "sold_out": "Sold Out",
+      "add_to_cart": "Acquire Relic",
+      "unavailable": "Unavailable",
+      "low_stock": "Only {{ count }} left",
+      "almost_gone": "Almost Gone!"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Transmission Cart",
+      "empty": "No relics tuned to this signal yet."
+    }
+  },
+  "sections": {
+    "announcement": {
+      "text": "\ud83d\ude80 Free shipping on orders over $75"
+    },
+    "footer": {
+      "capsules": "Capsules",
+      "support": "Support",
+      "connect": "Connect"
+    }
+  }
+}

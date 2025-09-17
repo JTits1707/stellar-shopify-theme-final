@@ -1,0 +1,42 @@
+{% comment %}
+  Stellar Reverb – Announcement Bar
+  Use for free shipping, incoming transmissions, capsule teasers, etc.
+{% endcomment %}
+
+<section class="announcement-bar">
+  <div class="announcement-inner">
+    <p>{{ section.settings.message }}</p>
+  </div>
+</section>
+
+<style>
+.announcement-bar {
+  background: linear-gradient(90deg,#E13CFA,#28A8D6);
+  text-align: center;
+  padding: 0.5rem 1rem;
+  font-family: Orbitron, sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  color: #fff;
+  animation: pulseBar 6s ease-in-out infinite;
+}
+@keyframes pulseBar {
+  0%,100% { opacity: 1; }
+  50% { opacity: .7; }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Announcement Bar",
+  "settings": [
+    {
+      "type": "text",
+      "id": "message",
+      "label": "Message",
+      "default": "🚀 COSMIC TRANSMISSIONS INCOMING – FREE SHIPPING ON ALL ORDERS 🌌"
+    }
+  ],
+  "presets": [{ "name": "Announcement Bar" }]
+}
+{% endschema %}

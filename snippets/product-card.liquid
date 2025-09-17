@@ -1,0 +1,67 @@
+{%- comment -%}
+  product-card.liquid
+  Inputs:
+    - product (required)
+    - capsule_number (optional, for labeling)
+    - low_stock_threshold (optional, default 5)
+    - show_total_low_stock (boolean, default true)
+{%- endcomment -%}
+
+{%- assign p = product | default: nil -%}
+{%- if p == nil -%}{% return %}{%- endif -%}
+
+{%- assign threshold = low_stock_threshold | default: settings.low_stock_threshold | default: 5 -%}
+{%- assign show_total = show_total_low_stock | default: settings.show_total_low_stock | default: true -%}
+{%- assign v = p.selected_or_first_available_variant -%}
+
+<div class="sr-product-card" data-product-id="{{ p.id }}">
+  <a href="{{ p.url | within: collection }}" class="sr-card-image" aria-label="{{ p.title | escape }}">
+    {%- if p.featured_image -%}
+      {{ p.featured_image
+        | image_url: width: 760
+        | image_tag: alt: p.title, loading: 'lazy', sizes: '(min-width: 1000px) 300px, 42vw' }}
+    {%- endif -%}
+  </a>
+
+  <div class="sr-card-info">
+    {%- if capsule_number -%}
+      <div class="sr-card-capsule">Capsule {{ capsule_number }}</div>
+    {%- endif -%}
+
+    <a class="sr-card-title" href="{{ p.url | within: collection }}">{{ p.title }}</a>
+
+    <div class="sr-price-row">
+      <span class="sr-price">{{ v.price | money_with_currency }}</span>
+      {%- if v.compare_at_price > v.price -%}
+        <span class="sr-compare">{{ v.compare_at_price | money_with_currency }}</span>
+        <span class="relic-badge badge-sale">On Sale</span>
+      {%- endif -%}
+    </div>
+
+    {%- unless v.available -%}
+      <div class="sr-soldout-line">
+        <span class="relic-badge badge-soldout">Sold Out</span>
+      </div>
+    {%- else -%}
+      {%- if v.inventory_management and v.inventory_policy == 'deny' and v.inventory_quantity > 0 and v.inventory_quantity <= threshold -%}
+        <div class="sr-lowstock-line">
+          <span class="relic-badge badge-low">Only {{ v.inventory_quantity }} left</span>
+        </div>
+      {%- endif -%}
+
+      {%- if show_total -%}
+        {%- assign total_qty = 0 -%}
+        {%- for vv in p.variants -%}
+          {%- if vv.inventory_management and vv.inventory_policy == 'deny' and vv.inventory_quantity > 0 -%}
+            {%- assign total_qty = total_qty | plus: vv.inventory_quantity -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if total_qty > 0 and total_qty <= threshold -%}
+          <div class="sr-lowstock-line">
+            <span class="relic-badge badge-low">Only {{ total_qty }} left total</span>
+          </div>
+        {%- endif -%}
+      {%- endif -%}
+    {%- endunless -%}
+  </div>
+</div>

@@ -1,0 +1,26 @@
+{% comment %}
+  Stellar Reverb – Transmission Grid
+  Displays products (relics) in a grid format.
+{% endcomment %}
+<section class="transmission-grid container mx-auto py-12">
+  <h2 class="text-center font-orbitron text-3xl mb-8 gradient-text">// TRANSMISSIONS //</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    {% for product in collections['all'].products limit:6 %}
+      <div class="sr-product-card border border-purple-800 p-6 rounded-lg hover:shadow-neon transition">
+        <a href="{{ product.url }}">
+          {{ product.featured_image | image_url: width: 600 | image_tag: class: "rounded-md w-full mb-4" }}
+          <h3 class="font-orbitron text-lg mb-2">{{ product.title }}</h3>
+          <p class="text-sm text-gray-400 mb-2">{{ product.description | strip_html | truncatewords: 12 }}</p>
+          <span class="text-cyan-400 font-bold">{{ product.price | money }}</span>
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Transmission Grid",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,612 @@
+{% comment %}
+  Stellar Reverb Variant Swatches Snippet
+  Interactive color and size swatches with cosmic styling
+{% endcomment %}
+
+{% assign product = product | default: product %}
+{% assign current_variant = current_variant | default: product.selected_or_first_available_variant %}
+{% assign show_labels = show_labels | default: true %}
+{% assign swatch_style = swatch_style | default: 'cosmic' %}
+
+<div class="variant-swatches" data-product-id="{{ product.id }}">
+  
+  {% for option in product.options_with_values %}
+    {% assign option_name = option.name | downcase %}
+    {% assign is_color = false %}
+    {% assign is_size = false %}
+    
+    {% if option_name contains 'color' or option_name contains 'colour' %}
+      {% assign is_color = true %}
+    {% elsif option_name contains 'size' %}
+      {% assign is_size = true %}
+    {% endif %}
+    
+    <div class="variant-option" data-option-index="{{ forloop.index0 }}">
+      
+      {% if show_labels %}
+        <div class="option-label">
+          <span class="option-name">{{ option.name }}:</span>
+          <span class="option-value" data-option-value>{{ current_variant.options[forloop.index0] }}</span>
+        </div>
+      {% endif %}
+      
+      <div class="option-swatches {% if is_color %}color-swatches{% elsif is_size %}size-swatches{% else %}text-swatches{% endif %}">
+        
+        {% for value in option.values %}
+          {% assign option_available = false %}
+          {% assign option_variant = null %}
+          
+          {% comment %} Check if this option combination is available {% endcomment %}
+          {% for variant in product.variants %}
+            {% if variant.options[forloop.index0] == value %}
+              {% assign option_available = true %}
+              {% assign option_variant = variant %}
+              {% break %}
+            {% endif %}
+          {% endfor %}
+          
+          {% assign is_selected = false %}
+          {% if current_variant.options[forloop.index0] == value %}
+            {% assign is_selected = true %}
+          {% endif %}
+          
+          <div 
+            class="swatch-item {% if is_selected %}selected{% endif %} {% unless option_available %}unavailable{% endunless %}"
+            data-option-value="{{ value | escape }}"
+            data-option-index="{{ forloop.index0 }}"
+            data-variant-id="{% if option_variant %}{{ option_variant.id }}{% endif %}"
+          >
+            
+            {% if is_color %}
+              {% comment %} Color Swatches {% endcomment %}
+              <div class="color-swatch" style="background-color: {{ value | replace: ' ', '' | downcase }};">
+                {% comment %} Try to load color image if available {% endcomment %}
+                {% assign color_image = images[value] %}
+                {% if color_image %}
+                  <img src="{{ color_image | image_url: width: 50 }}" alt="{{ value }}" loading="lazy">
+                {% endif %}
+                
+                {% comment %} Cosmic glow effect {% endcomment %}
+                <div class="swatch-glow"></div>
+                
+                {% comment %} Selection indicator {% endcomment %}
+                <div class="swatch-indicator">
+                  <i class="fas fa-check"></i>
+                </div>
+              </div>
+              
+              {% if show_labels %}
+                <span class="swatch-label">{{ value }}</span>
+              {% endif %}
+              
+            {% elsif is_size %}
+              {% comment %} Size Swatches {% endcomment %}
+              <div class="size-swatch">
+                <span class="size-text">{{ value }}</span>
+                
+                {% comment %} Cosmic border effect {% endcomment %}
+                <div class="swatch-border"></div>
+                
+                {% comment %} Selection indicator {% endcomment %}
+                <div class="swatch-indicator">
+                  <i class="fas fa-check"></i>
+                </div>
+              </div>
+              
+            {% else %}
+              {% comment %} Text/Other Swatches {% endcomment %}
+              <div class="text-swatch">
+                <span class="text-value">{{ value }}</span>
+                
+                {% comment %} Cosmic border effect {% endcomment %}
+                <div class="swatch-border"></div>
+                
+                {% comment %} Selection indicator {% endcomment %}
+                <div class="swatch-indicator">
+                  <i class="fas fa-check"></i>
+                </div>
+              </div>
+              
+            {% endif %}
+            
+            {% comment %} Unavailable overlay {% endcomment %}
+            {% unless option_available %}
+              <div class="unavailable-overlay">
+                <i class="fas fa-times"></i>
+              </div>
+            {% endunless %}
+            
+          </div>
+        {% endfor %}
+        
+      </div>
+    </div>
+  {% endfor %}
+  
+  {% comment %} Variant Information Display {% endcomment %}
+  <div class="variant-info">
+    <div class="variant-price" data-variant-price>
+      {% if current_variant.compare_at_price > current_variant.price %}
+        <span class="price-sale">{{ current_variant.price | money }}</span>
+        <span class="price-compare">{{ current_variant.compare_at_price | money }}</span>
+        <span class="price-save">Save {{ current_variant.compare_at_price | minus: current_variant.price | money }}</span>
+      {% else %}
+        <span class="price-regular">{{ current_variant.price | money }}</span>
+      {% endif %}
+    </div>
+    
+    {% if current_variant.sku != blank %}
+      <div class="variant-sku">
+        <span class="sku-label">SKU:</span>
+        <span class="sku-value" data-variant-sku>{{ current_variant.sku }}</span>
+      </div>
+    {% endif %}
+    
+    <div class="variant-availability" data-variant-availability>
+      {% if current_variant.available %}
+        {% assign inventory = current_variant.inventory_quantity %}
+        {% if inventory <= 5 and inventory > 0 %}
+          <span class="stock-low">
+            <i class="fas fa-exclamation-triangle"></i>
+            Only {{ inventory }} left!
+          </span>
+        {% elsif inventory > 5 %}
+          <span class="stock-available">
+            <i class="fas fa-check-circle"></i>
+            In Stock
+          </span>
+        {% else %}
+          <span class="stock-available">
+            <i class="fas fa-check-circle"></i>
+            Available
+          </span>
+        {% endif %}
+      {% else %}
+        <span class="stock-unavailable">
+          <i class="fas fa-times-circle"></i>
+          Out of Stock
+        </span>
+      {% endif %}
+    </div>
+  </div>
+  
+</div>
+
+<style>
+  .variant-swatches {
+    margin: 1.5rem 0;
+  }
+  
+  .variant-option {
+    margin-bottom: 1.5rem;
+  }
+  
+  .option-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.8rem;
+    font-family: 'Orbitron', monospace;
+  }
+  
+  .option-name {
+    color: var(--cyan-blue);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+  }
+  
+  .option-value {
+    color: var(--electric-yellow);
+    font-weight: 500;
+    padding: 0.2rem 0.6rem;
+    background: rgba(244, 255, 48, 0.1);
+    border-radius: 0.3rem;
+    border: 1px solid var(--electric-yellow);
+  }
+  
+  .option-swatches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+  
+  .swatch-item {
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .swatch-item.unavailable {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .swatch-item:hover:not(.unavailable) {
+    transform: translateY(-2px);
+  }
+  
+  /* Color Swatches */
+  .color-swatch {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid var(--cyan-blue);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  
+  .color-swatch img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .swatch-glow {
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, var(--neon-magenta), var(--cyan-blue));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+  }
+  
+  .swatch-item.selected .color-swatch {
+    border-color: var(--neon-magenta);
+    box-shadow: 0 0 15px rgba(225, 60, 250, 0.5);
+  }
+  
+  .swatch-item.selected .swatch-glow {
+    opacity: 1;
+    animation: glow-pulse 2s ease-in-out infinite;
+  }
+  
+  .color-swatches .swatch-label {
+    display: block;
+    text-align: center;
+    margin-top: 0.3rem;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-family: 'Orbitron', monospace;
+  }
+  
+  /* Size Swatches */
+  .size-swatch {
+    width: 50px;
+    height: 40px;
+    background: rgba(13, 13, 13, 0.8);
+    border: 2px solid var(--cyan-blue);
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  
+  .size-text {
+    font-family: 'Orbitron', monospace;
+    font-weight: 600;
+    color: var(--cyan-blue);
+    font-size: 0.9rem;
+  }
+  
+  .swatch-item.selected .size-swatch {
+    background: var(--cyan-blue);
+    border-color: var(--neon-magenta);
+    box-shadow: 0 0 15px rgba(40, 168, 214, 0.5);
+  }
+  
+  .swatch-item.selected .size-text {
+    color: var(--void-black);
+  }
+  
+  .swatch-border {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: inherit;
+    background: linear-gradient(45deg, var(--neon-magenta), var(--cyan-blue));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+  }
+  
+  .swatch-item.selected .swatch-border {
+    opacity: 1;
+    animation: border-glow 2s ease-in-out infinite;
+  }
+  
+  /* Text Swatches */
+  .text-swatch {
+    padding: 0.5rem 1rem;
+    background: rgba(13, 13, 13, 0.8);
+    border: 2px solid var(--cyan-blue);
+    border-radius: 0.5rem;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  
+  .text-value {
+    font-family: 'Orbitron', monospace;
+    font-weight: 500;
+    color: var(--cyan-blue);
+    font-size: 0.9rem;
+  }
+  
+  .swatch-item.selected .text-swatch {
+    background: var(--cyan-blue);
+    border-color: var(--neon-magenta);
+    box-shadow: 0 0 15px rgba(40, 168, 214, 0.5);
+  }
+  
+  .swatch-item.selected .text-value {
+    color: var(--void-black);
+  }
+  
+  /* Selection Indicator */
+  .swatch-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--radioactive-green);
+    font-size: 0.8rem;
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 2;
+  }
+  
+  .swatch-item.selected .swatch-indicator {
+    opacity: 1;
+    animation: check-bounce 0.5s ease-out;
+  }
+  
+  /* Unavailable Overlay */
+  .unavailable-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 68, 68, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: inherit;
+    color: white;
+    font-size: 0.8rem;
+  }
+  
+  /* Variant Information */
+  .variant-info {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: rgba(40, 168, 214, 0.05);
+    border: 2px solid var(--cyan-blue);
+    border-radius: 0.8rem;
+  }
+  
+  .variant-price {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 0.8rem;
+    flex-wrap: wrap;
+  }
+  
+  .price-sale {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--radioactive-green);
+  }
+  
+  .price-compare {
+    font-family: 'Orbitron', monospace;
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: line-through;
+    font-size: 1.1rem;
+  }
+  
+  .price-regular {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--electric-yellow);
+  }
+  
+  .price-save {
+    background: var(--radioactive-green);
+    color: var(--void-black);
+    padding: 0.2rem 0.6rem;
+    border-radius: 0.3rem;
+    font-family: 'Orbitron', monospace;
+    font-weight: 600;
+    font-size: 0.8rem;
+  }
+  
+  .variant-sku {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.8rem;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.9rem;
+  }
+  
+  .sku-label {
+    color: var(--cyan-blue);
+    font-weight: 600;
+  }
+  
+  .sku-value {
+    color: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.3rem;
+  }
+  
+  .variant-availability {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Orbitron', monospace;
+    font-weight: 600;
+  }
+  
+  .stock-available {
+    color: var(--radioactive-green);
+  }
+  
+  .stock-low {
+    color: var(--electric-yellow);
+    animation: pulse-warning 2s ease-in-out infinite;
+  }
+  
+  .stock-unavailable {
+    color: #ff4444;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .option-swatches {
+      gap: 0.6rem;
+    }
+    
+    .color-swatch {
+      width: 35px;
+      height: 35px;
+    }
+    
+    .size-swatch {
+      width: 45px;
+      height: 35px;
+    }
+    
+    .text-swatch {
+      padding: 0.4rem 0.8rem;
+    }
+    
+    .variant-price {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+    
+    .price-sale,
+    .price-regular {
+      font-size: 1.3rem;
+    }
+  }
+  
+  /* Animations */
+  @keyframes glow-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.05); }
+  }
+  
+  @keyframes border-glow {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  
+  @keyframes check-bounce {
+    0% { transform: translate(-50%, -50%) scale(0); }
+    50% { transform: translate(-50%, -50%) scale(1.2); }
+    100% { transform: translate(-50%, -50%) scale(1); }
+  }
+  
+  @keyframes pulse-warning {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const variantSwatches = document.querySelectorAll('.variant-swatches');
+    
+    variantSwatches.forEach(swatchContainer => {
+      const productId = swatchContainer.dataset.productId;
+      const swatchItems = swatchContainer.querySelectorAll('.swatch-item:not(.unavailable)');
+      
+      swatchItems.forEach(swatch => {
+        swatch.addEventListener('click', function() {
+          const optionIndex = parseInt(this.dataset.optionIndex);
+          const optionValue = this.dataset.optionValue;
+          const variantId = this.dataset.variantId;
+          
+          // Update selected state
+          const optionContainer = this.closest('.variant-option');
+          const siblingSwatches = optionContainer.querySelectorAll('.swatch-item');
+          
+          siblingSwatches.forEach(s => s.classList.remove('selected'));
+          this.classList.add('selected');
+          
+          // Update option value display
+          const optionValueDisplay = optionContainer.querySelector('[data-option-value]');
+          if (optionValueDisplay) {
+            optionValueDisplay.textContent = optionValue;
+          }
+          
+          // Find and update variant information
+          updateVariantInfo(swatchContainer, variantId);
+          
+          // Trigger custom event for other components
+          const event = new CustomEvent('variantChanged', {
+            detail: {
+              productId: productId,
+              variantId: variantId,
+              optionIndex: optionIndex,
+              optionValue: optionValue
+            }
+          });
+          
+          swatchContainer.dispatchEvent(event);
+        });
+      });
+    });
+    
+    function updateVariantInfo(container, variantId) {
+      // This would typically make an AJAX call to get variant information
+      // For now, we'll simulate the update
+      
+      const priceDisplay = container.querySelector('[data-variant-price]');
+      const skuDisplay = container.querySelector('[data-variant-sku]');
+      const availabilityDisplay = container.querySelector('[data-variant-availability]');
+      
+      // Add loading state
+      if (priceDisplay) priceDisplay.style.opacity = '0.5';
+      if (skuDisplay) skuDisplay.style.opacity = '0.5';
+      if (availabilityDisplay) availabilityDisplay.style.opacity = '0.5';
+      
+      // Simulate API call delay
+      setTimeout(() => {
+        // Reset opacity
+        if (priceDisplay) priceDisplay.style.opacity = '1';
+        if (skuDisplay) skuDisplay.style.opacity = '1';
+        if (availabilityDisplay) availabilityDisplay.style.opacity = '1';
+        
+        // In a real implementation, you would update with actual variant data
+        console.log(`Updated variant info for variant ID: ${variantId}`);
+      }, 300);
+    }
+    
+    // Handle variant changes from other components (like product forms)
+    document.addEventListener('variantChanged', function(e) {
+      const { productId, variantId } = e.detail;
+      console.log(`Variant changed: Product ${productId}, Variant ${variantId}`);
+      
+      // Update any other components that depend on variant selection
+      // e.g., update product images, update add to cart button, etc.
+    });
+  });
+</script>

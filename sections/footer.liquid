@@ -1,0 +1,674 @@
+{% comment %}
+  Stellar Reverb Footer Section
+  Footer with cosmic design and newsletter signup
+{% endcomment %}
+
+<footer class="footer" role="contentinfo">
+  <div class="page-width">
+    
+    <!-- Footer Main Content -->
+    <div class="footer-content">
+      
+      <!-- Brand Section -->
+      <div class="footer-brand">
+        <div class="footer-logo">
+          {% if settings.brand_logo %}
+            <img 
+              src="{{ settings.brand_logo | image_url: width: 150 }}" 
+              alt="{{ shop.name }}"
+              class="footer-logo-image"
+            >
+          {% else %}
+            <span class="footer-logo-text">{{ shop.name | default: 'STELLAR REVERB' }}</span>
+          {% endif %}
+        </div>
+        
+        <p class="footer-tagline">{{ settings.brand_tagline | default: 'Sound. Style. Transmissions Of Cosmic Identity.' }}</p>
+        
+        <div class="footer-description">
+          {{ settings.brand_description | default: 'Stellar Reverb transmits surreal cosmic frequencies through mythic apparel and art. Each release is a signal from another reality.' }}
+        </div>
+        
+        <!-- Social Links -->
+        {% if section.settings.show_social_icons %}
+          <div class="social-links">
+            {% if settings.instagram_url != blank %}
+              <a href="{{ settings.instagram_url }}" class="social-link" target="_blank" rel="noopener" aria-label="Instagram">
+                <i class="fab fa-instagram"></i>
+              </a>
+            {% endif %}
+            
+            {% if settings.twitter_url != blank %}
+              <a href="{{ settings.twitter_url }}" class="social-link" target="_blank" rel="noopener" aria-label="Twitter">
+                <i class="fab fa-twitter"></i>
+              </a>
+            {% endif %}
+            
+            {% if settings.youtube_url != blank %}
+              <a href="{{ settings.youtube_url }}" class="social-link" target="_blank" rel="noopener" aria-label="YouTube">
+                <i class="fab fa-youtube"></i>
+              </a>
+            {% endif %}
+            
+            {% if settings.tiktok_url != blank %}
+              <a href="{{ settings.tiktok_url }}" class="social-link" target="_blank" rel="noopener" aria-label="TikTok">
+                <i class="fab fa-tiktok"></i>
+              </a>
+            {% endif %}
+            
+            {% if settings.discord_url != blank %}
+              <a href="{{ settings.discord_url }}" class="social-link" target="_blank" rel="noopener" aria-label="Discord">
+                <i class="fab fa-discord"></i>
+              </a>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+      
+      <!-- Navigation Links -->
+      <div class="footer-nav">
+        <div class="footer-nav-section">
+          <h3 class="footer-nav-title">Navigation</h3>
+          <ul class="footer-nav-list">
+            {% for link in linklists[settings.footer_menu].links %}
+              <li class="footer-nav-item">
+                <a href="{{ link.url }}" class="footer-nav-link">{{ link.title }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+        
+        <div class="footer-nav-section">
+          <h3 class="footer-nav-title">Transmissions</h3>
+          <ul class="footer-nav-list">
+            <li class="footer-nav-item">
+              <a href="{{ collections.all.url }}" class="footer-nav-link">All Transmissions</a>
+            </li>
+            <li class="footer-nav-item">
+              <a href="{{ collections.t-shirts.url | default: '/collections/t-shirts' }}" class="footer-nav-link">T-Shirts</a>
+            </li>
+            <li class="footer-nav-item">
+              <a href="{{ collections.hoodies.url | default: '/collections/hoodies' }}" class="footer-nav-link">Hoodies</a>
+            </li>
+            <li class="footer-nav-item">
+              <a href="{{ collections.accessories.url | default: '/collections/accessories' }}" class="footer-nav-link">Accessories</a>
+            </li>
+            <li class="footer-nav-item">
+              <a href="{{ collections.limited-edition.url | default: '/collections/limited-edition' }}" class="footer-nav-link">Limited Edition</a>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="footer-nav-section">
+          <h3 class="footer-nav-title">Support</h3>
+          <ul class="footer-nav-list">
+            <li class="footer-nav-item">
+              <a href="{{ pages.contact.url | default: '/pages/contact' }}" class="footer-nav-link">Contact</a>
+            </li>
+            <li class="footer-nav-item">
+              <a href="{{ pages.shipping.url | default: '/pages/shipping' }}" class="footer-nav-link">Shipping Info</a>
+            </li>
+            <li class="footer-nav-item">
+              <a href="{{ pages.returns.url | default: '/pages/returns' }}" class="footer-nav-link">Returns</a>
+            </li>
+            <li class="footer-nav-item">
+              <a href="{{ pages.size-guide.url | default: '/pages/size-guide' }}" class="footer-nav-link">Size Guide</a>
+            </li>
+            <li class="footer-nav-item">
+              <a href="{{ pages.faq.url | default: '/pages/faq' }}" class="footer-nav-link">FAQ</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Newsletter Signup -->
+      {% if section.settings.show_newsletter %}
+        <div class="footer-newsletter">
+          <h3 class="newsletter-title">{{ section.settings.newsletter_title | default: 'JOIN THE SIGNAL SEEKERS' }}</h3>
+          <p class="newsletter-subtitle">{{ section.settings.newsletter_subtitle | default: 'Unlock the cosmic frequencies' }}</p>
+          
+          {% form 'customer', class: 'newsletter-form' %}
+            {% if form.posted_successfully? %}
+              <div class="form-success">
+                <i class="fas fa-check-circle"></i>
+                Signal received! Welcome to the cosmic frequency.
+              </div>
+            {% endif %}
+            
+            {% if form.errors %}
+              <div class="form-errors">
+                <i class="fas fa-exclamation-triangle"></i>
+                {{ form.errors | default_errors }}
+              </div>
+            {% endif %}
+            
+            <input type="hidden" name="contact[tags]" value="newsletter,footer-signup">
+            
+            <div class="newsletter-input-group">
+              <input 
+                type="email" 
+                name="contact[email]" 
+                class="newsletter-input" 
+                placeholder="Enter your frequency..."
+                required
+                aria-label="Email address"
+              >
+              <button type="submit" class="newsletter-button">
+                <i class="fas fa-satellite-dish"></i>
+              </button>
+            </div>
+          {% endform %}
+        </div>
+      {% endif %}
+      
+    </div>
+    
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+      <div class="footer-bottom-content">
+        
+        <!-- Copyright -->
+        <div class="footer-copyright">
+          <p>{{ section.settings.copyright_text | default: '© 2025 Stellar Reverb • Sound. Style. Transmissions of Cosmic Identity.' }}</p>
+        </div>
+        
+        <!-- Payment Icons -->
+        {% if section.settings.show_payment_icons %}
+          <div class="payment-icons">
+            <span class="payment-text">Secure payments via</span>
+            <div class="payment-methods">
+              <i class="fab fa-cc-visa"></i>
+              <i class="fab fa-cc-mastercard"></i>
+              <i class="fab fa-cc-amex"></i>
+              <i class="fab fa-cc-discover"></i>
+              <i class="fab fa-cc-paypal"></i>
+              <i class="fab fa-apple-pay"></i>
+              <i class="fab fa-google-pay"></i>
+            </div>
+          </div>
+        {% endif %}
+        
+        <!-- Legal Links -->
+        <div class="footer-legal">
+          <a href="{{ pages.privacy-policy.url | default: '/pages/privacy-policy' }}" class="legal-link">Privacy Policy</a>
+          <span class="legal-separator">•</span>
+          <a href="{{ pages.terms-of-service.url | default: '/pages/terms-of-service' }}" class="legal-link">Terms of Service</a>
+        </div>
+        
+      </div>
+    </div>
+    
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: linear-gradient(180deg, #1a0d2e, var(--void-black));
+    color: white;
+    padding: 4rem 2rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 80%, var(--cosmic-purple) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, var(--cyan-blue) 0%, transparent 50%);
+    opacity: 0.1;
+    pointer-events: none;
+  }
+  
+  .footer-content {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+    position: relative;
+    z-index: 2;
+  }
+  
+  /* Brand Section */
+  .footer-brand {
+    text-align: left;
+  }
+  
+  .footer-logo {
+    margin-bottom: 1rem;
+  }
+  
+  .footer-logo-image {
+    max-height: 60px;
+    width: auto;
+    filter: drop-shadow(0 0 10px var(--neon-magenta));
+  }
+  
+  .footer-logo-text {
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: 1.5rem;
+    background: linear-gradient(45deg, var(--neon-magenta), var(--cyan-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 20px var(--neon-magenta);
+  }
+  
+  .footer-tagline {
+    font-family: 'Orbitron', monospace;
+    color: var(--electric-yellow);
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+  }
+  
+  .footer-description {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .social-links {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: rgba(40, 168, 214, 0.1);
+    border: 2px solid var(--cyan-blue);
+    border-radius: 50%;
+    color: var(--cyan-blue);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 1.2rem;
+  }
+  
+  .social-link:hover {
+    background: var(--cyan-blue);
+    color: var(--void-black);
+    box-shadow: 0 0 20px var(--cyan-blue);
+    transform: translateY(-3px);
+  }
+  
+  /* Navigation */
+  .footer-nav {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  
+  .footer-nav-title {
+    font-family: 'Orbitron', monospace;
+    color: var(--neon-magenta);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 10px var(--neon-magenta);
+  }
+  
+  .footer-nav-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .footer-nav-item {
+    margin-bottom: 0.5rem;
+  }
+  
+  .footer-nav-link {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+  }
+  
+  .footer-nav-link:hover {
+    color: var(--radioactive-green);
+    text-shadow: 0 0 10px var(--radioactive-green);
+    transform: translateX(5px);
+  }
+  
+  /* Newsletter */
+  .footer-newsletter {
+    text-align: center;
+  }
+  
+  .newsletter-title {
+    font-family: 'Orbitron', monospace;
+    color: var(--neon-magenta);
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 15px var(--neon-magenta);
+  }
+  
+  .newsletter-subtitle {
+    color: var(--electric-yellow);
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .newsletter-form {
+    margin-bottom: 1rem;
+  }
+  
+  .newsletter-input-group {
+    display: flex;
+    max-width: 300px;
+    margin: 0 auto;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    border: 2px solid var(--cyan-blue);
+    transition: all 0.3s ease;
+  }
+  
+  .newsletter-input-group:focus-within {
+    border-color: var(--neon-magenta);
+    box-shadow: 0 0 20px rgba(225, 60, 250, 0.3);
+  }
+  
+  .newsletter-input {
+    flex: 1;
+    padding: 0.8rem;
+    background: rgba(13, 13, 13, 0.8);
+    border: none;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    outline: none;
+  }
+  
+  .newsletter-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+    font-style: italic;
+  }
+  
+  .newsletter-button {
+    background: var(--cyan-blue);
+    color: var(--void-black);
+    border: none;
+    padding: 0.8rem 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+  }
+  
+  .newsletter-button:hover {
+    background: var(--radioactive-green);
+  }
+  
+  .form-success {
+    background: linear-gradient(45deg, var(--radioactive-green), var(--cyan-blue));
+    color: var(--void-black);
+    padding: 0.8rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-bottom: 1rem;
+    animation: successPulse 0.5s ease-out;
+  }
+  
+  .form-errors {
+    background: linear-gradient(45deg, #ff6b35, var(--electric-yellow));
+    color: var(--void-black);
+    padding: 0.8rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+  
+  /* Footer Bottom */
+  .footer-bottom {
+    border-top: 2px solid var(--cyan-blue);
+    padding-top: 2rem;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .footer-bottom-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .footer-copyright {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    font-family: 'Orbitron', monospace;
+  }
+  
+  .payment-icons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .payment-text {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.8rem;
+  }
+  
+  .payment-methods {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .payment-methods i {
+    font-size: 1.5rem;
+    color: var(--cyan-blue);
+    transition: all 0.3s ease;
+  }
+  
+  .payment-methods i:hover {
+    color: var(--radioactive-green);
+    transform: scale(1.1);
+  }
+  
+  .footer-legal {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .legal-link {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 0.8rem;
+    transition: color 0.3s ease;
+  }
+  
+  .legal-link:hover {
+    color: var(--electric-yellow);
+  }
+  
+  .legal-separator {
+    color: var(--electric-yellow);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .footer-content {
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    
+    .footer-newsletter {
+      grid-column: 1 / -1;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 2px solid var(--cyan-blue);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .footer {
+      padding: 3rem 1rem 1.5rem;
+    }
+    
+    .footer-content {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    
+    .footer-nav {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    
+    .footer-bottom-content {
+      flex-direction: column;
+      text-align: center;
+      gap: 1.5rem;
+    }
+    
+    .payment-icons {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .social-links {
+      justify-content: center;
+    }
+  }
+  
+  @keyframes successPulse {
+    0% { transform: scale(0.9); opacity: 0; }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const newsletterForm = document.querySelector('.newsletter-form');
+    const newsletterButton = newsletterForm?.querySelector('.newsletter-button');
+    
+    if (newsletterForm && newsletterButton) {
+      newsletterForm.addEventListener('submit', function(e) {
+        // Add loading state
+        const originalHTML = newsletterButton.innerHTML;
+        newsletterButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        newsletterButton.disabled = true;
+        
+        // Reset after form submission (whether success or error)
+        setTimeout(() => {
+          if (!newsletterForm.querySelector('.form-success')) {
+            newsletterButton.innerHTML = originalHTML;
+            newsletterButton.disabled = false;
+          }
+        }, 2000);
+      });
+      
+      // Success state handling
+      const successMessage = newsletterForm.querySelector('.form-success');
+      if (successMessage) {
+        newsletterButton.innerHTML = '<i class="fas fa-check"></i>';
+        newsletterButton.style.background = 'var(--radioactive-green)';
+        newsletterButton.disabled = true;
+      }
+    }
+    
+    // Animate social links on scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const socialLinks = entry.target.querySelectorAll('.social-link');
+          socialLinks.forEach((link, index) => {
+            setTimeout(() => {
+              link.style.animation = 'fadeInUp 0.5s ease-out forwards';
+            }, index * 100);
+          });
+        }
+      });
+    }, observerOptions);
+    
+    const socialContainer = document.querySelector('.social-links');
+    if (socialContainer) {
+      observer.observe(socialContainer);
+    }
+  });
+  
+  // Add fadeInUp animation
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  `;
+  document.head.appendChild(style);
+</script>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_newsletter",
+      "label": "Show newsletter signup",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "newsletter_title",
+      "label": "Newsletter title",
+      "default": "JOIN THE SIGNAL SEEKERS"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_subtitle",
+      "label": "Newsletter subtitle",
+      "default": "Unlock the cosmic frequencies"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social_icons",
+      "label": "Show social icons",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show payment icons",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "Copyright text",
+      "default": "© 2025 Stellar Reverb • Sound. Style. Transmissions of Cosmic Identity."
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,631 @@
+{% comment %}
+  Stellar Reverb Logo Snippet
+  Animated cosmic logo with glitch effects and responsive sizing
+{% endcomment %}
+
+{% assign logo_style = logo_style | default: 'cosmic' %}
+{% assign logo_size = logo_size | default: 'medium' %}
+{% assign show_text = show_text | default: true %}
+{% assign enable_animation = enable_animation | default: true %}
+{% assign link_url = link_url | default: routes.root_url %}
+
+<div class="stellar-logo stellar-logo--{{ logo_style }} stellar-logo--{{ logo_size }}">
+  <a href="{{ link_url }}" class="logo-link" aria-label="Stellar Reverb Home">
+    
+    {% if settings.logo %}
+      <!-- Custom Logo Image -->
+      <div class="logo-image-container">
+        <img 
+          src="{{ settings.logo | image_url: width: 300 }}" 
+          alt="{{ shop.name }}"
+          class="logo-image"
+          width="auto"
+          height="auto"
+        >
+        
+        {% if enable_animation %}
+          <div class="logo-glow"></div>
+          <div class="logo-glitch"></div>
+        {% endif %}
+      </div>
+      
+    {% else %}
+      <!-- Text Logo with Cosmic Effects -->
+      <div class="logo-text-container">
+        
+        <!-- Main Logo Text -->
+        <div class="logo-text" data-text="{{ shop.name }}">
+          {% if show_text %}
+            {{ shop.name | default: 'STELLAR REVERB' }}
+          {% else %}
+            SR
+          {% endif %}
+        </div>
+        
+        {% if enable_animation %}
+          <!-- Cosmic Effects -->
+          <div class="logo-effects">
+            <div class="cosmic-ring cosmic-ring-1"></div>
+            <div class="cosmic-ring cosmic-ring-2"></div>
+            <div class="cosmic-ring cosmic-ring-3"></div>
+          </div>
+          
+          <!-- Floating Particles -->
+          <div class="logo-particles">
+            <div class="particle particle-1"></div>
+            <div class="particle particle-2"></div>
+            <div class="particle particle-3"></div>
+            <div class="particle particle-4"></div>
+          </div>
+          
+          <!-- Waveform Indicator -->
+          <div class="logo-waveform">
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+          </div>
+        {% endif %}
+        
+      </div>
+    {% endif %}
+    
+    {% if logo_style == 'cosmic' and enable_animation %}
+      <!-- Background Cosmic Effect -->
+      <div class="logo-cosmic-bg">
+        <div class="cosmic-gradient"></div>
+        <div class="stellar-field">
+          <div class="star star-1"></div>
+          <div class="star star-2"></div>
+          <div class="star star-3"></div>
+          <div class="star star-4"></div>
+          <div class="star star-5"></div>
+        </div>
+      </div>
+    {% endif %}
+    
+  </a>
+</div>
+
+<style>
+  .stellar-logo {
+    position: relative;
+    display: inline-block;
+    z-index: 10;
+  }
+  
+  .logo-link {
+    display: block;
+    text-decoration: none;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  
+  .logo-link:hover {
+    transform: translateY(-2px);
+  }
+  
+  /* ===== SIZE VARIANTS ===== */
+  .stellar-logo--small {
+    font-size: 1.2rem;
+  }
+  
+  .stellar-logo--small .logo-image {
+    max-height: 40px;
+  }
+  
+  .stellar-logo--medium {
+    font-size: 1.8rem;
+  }
+  
+  .stellar-logo--medium .logo-image {
+    max-height: 60px;
+  }
+  
+  .stellar-logo--large {
+    font-size: 2.5rem;
+  }
+  
+  .stellar-logo--large .logo-image {
+    max-height: 80px;
+  }
+  
+  .stellar-logo--hero {
+    font-size: 4rem;
+  }
+  
+  .stellar-logo--hero .logo-image {
+    max-height: 120px;
+  }
+  
+  /* ===== IMAGE LOGO ===== */
+  .logo-image-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .logo-image {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    transition: all 0.3s ease;
+  }
+  
+  .logo-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle, var(--neon-magenta) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: inherit;
+  }
+  
+  .logo-link:hover .logo-glow {
+    opacity: 0.3;
+    animation: logo-pulse 2s ease-in-out infinite;
+  }
+  
+  .logo-glitch {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 30%, var(--cyan-blue) 50%, transparent 70%);
+    opacity: 0;
+    transform: translateX(-100%);
+    transition: all 0.3s ease;
+  }
+  
+  .logo-link:hover .logo-glitch {
+    opacity: 0.1;
+    transform: translateX(100%);
+  }
+  
+  /* ===== TEXT LOGO ===== */
+  .logo-text-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .logo-text {
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    color: var(--stellar-white);
+    position: relative;
+    z-index: 2;
+    transition: all 0.3s ease;
+  }
+  
+  /* ===== COSMIC STYLE ===== */
+  .stellar-logo--cosmic .logo-text {
+    background: linear-gradient(45deg, var(--neon-magenta), var(--cyan-blue), var(--electric-yellow));
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradient-shift 4s ease-in-out infinite;
+    text-shadow: 0 0 30px var(--neon-magenta);
+  }
+  
+  .stellar-logo--cosmic .logo-text::before,
+  .stellar-logo--cosmic .logo-text::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
+  
+  .stellar-logo--cosmic .logo-text::before {
+    color: var(--neon-magenta);
+    animation: glitch-1 3s infinite;
+    opacity: 0.8;
+  }
+  
+  .stellar-logo--cosmic .logo-text::after {
+    color: var(--cyan-blue);
+    animation: glitch-2 3s infinite;
+    opacity: 0.8;
+  }
+  
+  .logo-effects {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  
+  .cosmic-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid var(--cyan-blue);
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: cosmic-expand 4s ease-out infinite;
+  }
+  
+  .cosmic-ring-1 {
+    width: 80px;
+    height: 80px;
+    animation-delay: 0s;
+    border-color: var(--neon-magenta);
+  }
+  
+  .cosmic-ring-2 {
+    width: 120px;
+    height: 120px;
+    animation-delay: 1s;
+    border-color: var(--cyan-blue);
+  }
+  
+  .cosmic-ring-3 {
+    width: 160px;
+    height: 160px;
+    animation-delay: 2s;
+    border-color: var(--electric-yellow);
+  }
+  
+  .logo-particles {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 200px;
+    pointer-events: none;
+  }
+  
+  .particle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: var(--electric-yellow);
+    border-radius: 50%;
+    animation: particle-orbit 6s linear infinite;
+  }
+  
+  .particle-1 {
+    top: 20%;
+    left: 20%;
+    animation-delay: 0s;
+    background: var(--neon-magenta);
+  }
+  
+  .particle-2 {
+    top: 20%;
+    right: 20%;
+    animation-delay: 1.5s;
+    background: var(--cyan-blue);
+  }
+  
+  .particle-3 {
+    bottom: 20%;
+    right: 20%;
+    animation-delay: 3s;
+    background: var(--electric-yellow);
+  }
+  
+  .particle-4 {
+    bottom: 20%;
+    left: 20%;
+    animation-delay: 4.5s;
+    background: var(--radioactive-green);
+  }
+  
+  .logo-waveform {
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 2px;
+    align-items: end;
+    height: 12px;
+  }
+  
+  .wave-bar {
+    width: 2px;
+    background: var(--cyan-blue);
+    border-radius: 1px;
+    animation: wave-pulse 1.5s ease-in-out infinite;
+  }
+  
+  .wave-bar:nth-child(1) { height: 4px; animation-delay: 0s; }
+  .wave-bar:nth-child(2) { height: 8px; animation-delay: 0.2s; }
+  .wave-bar:nth-child(3) { height: 12px; animation-delay: 0.4s; }
+  .wave-bar:nth-child(4) { height: 6px; animation-delay: 0.6s; }
+  .wave-bar:nth-child(5) { height: 3px; animation-delay: 0.8s; }
+  
+  /* ===== MINIMAL STYLE ===== */
+  .stellar-logo--minimal .logo-text {
+    color: var(--stellar-white);
+    font-weight: 700;
+  }
+  
+  .stellar-logo--minimal .logo-link:hover .logo-text {
+    color: var(--cyan-blue);
+  }
+  
+  /* ===== NEON STYLE ===== */
+  .stellar-logo--neon .logo-text {
+    color: var(--neon-magenta);
+    text-shadow: 
+      0 0 5px var(--neon-magenta),
+      0 0 10px var(--neon-magenta),
+      0 0 15px var(--neon-magenta);
+    animation: neon-flicker 3s ease-in-out infinite;
+  }
+  
+  /* ===== BACKGROUND COSMIC EFFECT ===== */
+  .logo-cosmic-bg {
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -20px;
+    z-index: -1;
+    border-radius: 50%;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .logo-link:hover .logo-cosmic-bg {
+    opacity: 1;
+  }
+  
+  .cosmic-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle, var(--neon-magenta) 0%, transparent 70%);
+    animation: cosmic-rotate 8s linear infinite;
+  }
+  
+  .stellar-field {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  
+  .star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: var(--electric-yellow);
+    border-radius: 50%;
+    animation: star-twinkle 2s ease-in-out infinite;
+  }
+  
+  .star-1 { top: 20%; left: 30%; animation-delay: 0s; }
+  .star-2 { top: 40%; right: 25%; animation-delay: 0.5s; }
+  .star-3 { bottom: 30%; left: 20%; animation-delay: 1s; }
+  .star-4 { bottom: 20%; right: 40%; animation-delay: 1.5s; }
+  .star-5 { top: 60%; left: 60%; animation-delay: 2s; }
+  
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .stellar-logo--large {
+      font-size: 2rem;
+    }
+    
+    .stellar-logo--hero {
+      font-size: 3rem;
+    }
+    
+    .logo-particles {
+      width: 150px;
+      height: 150px;
+    }
+    
+    .cosmic-ring-1 { width: 60px; height: 60px; }
+    .cosmic-ring-2 { width: 90px; height: 90px; }
+    .cosmic-ring-3 { width: 120px; height: 120px; }
+    
+    .logo-waveform {
+      height: 8px;
+    }
+    
+    .wave-bar {
+      width: 1.5px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .stellar-logo--medium {
+      font-size: 1.5rem;
+    }
+    
+    .stellar-logo--large {
+      font-size: 1.8rem;
+    }
+    
+    .stellar-logo--hero {
+      font-size: 2.5rem;
+    }
+    
+    .logo-effects,
+    .logo-particles,
+    .logo-cosmic-bg {
+      display: none;
+    }
+  }
+  
+  /* ===== ANIMATIONS ===== */
+  @keyframes gradient-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  
+  @keyframes glitch-1 {
+    0%, 90%, 100% { transform: translate(0); }
+    20% { transform: translate(-1px, 1px); }
+    40% { transform: translate(-1px, -1px); }
+    60% { transform: translate(1px, 1px); }
+    80% { transform: translate(1px, -1px); }
+  }
+  
+  @keyframes glitch-2 {
+    0%, 90%, 100% { transform: translate(0); }
+    20% { transform: translate(1px, -1px); }
+    40% { transform: translate(1px, 1px); }
+    60% { transform: translate(-1px, -1px); }
+    80% { transform: translate(-1px, 1px); }
+  }
+  
+  @keyframes cosmic-expand {
+    0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; }
+    50% { opacity: 0.3; }
+    100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0; }
+  }
+  
+  @keyframes particle-orbit {
+    0% { transform: rotate(0deg) translateX(30px) rotate(0deg); }
+    100% { transform: rotate(360deg) translateX(30px) rotate(-360deg); }
+  }
+  
+  @keyframes wave-pulse {
+    0%, 100% { transform: scaleY(0.5); }
+    50% { transform: scaleY(1); }
+  }
+  
+  @keyframes neon-flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+  }
+  
+  @keyframes logo-pulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.6; }
+  }
+  
+  @keyframes cosmic-rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  @keyframes star-twinkle {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.2); }
+  }
+  
+  /* ===== ACCESSIBILITY ===== */
+  @media (prefers-reduced-motion: reduce) {
+    .stellar-logo * {
+      animation: none !important;
+    }
+    
+    .logo-link:hover {
+      transform: none;
+    }
+  }
+  
+  /* ===== PRINT STYLES ===== */
+  @media print {
+    .stellar-logo {
+      color: black !important;
+    }
+    
+    .logo-text {
+      background: none !important;
+      -webkit-text-fill-color: black !important;
+      text-shadow: none !important;
+    }
+    
+    .logo-effects,
+    .logo-particles,
+    .logo-cosmic-bg,
+    .logo-glow,
+    .logo-glitch,
+    .logo-waveform {
+      display: none !important;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const stellarLogos = document.querySelectorAll('.stellar-logo');
+    
+    stellarLogos.forEach(logo => {
+      const logoLink = logo.querySelector('.logo-link');
+      
+      // Add random glitch effect
+      function triggerRandomGlitch() {
+        const glitchElements = logo.querySelectorAll('.logo-text::before, .logo-text::after');
+        
+        if (Math.random() < 0.05) { // 5% chance
+          logo.classList.add('glitch-active');
+          
+          setTimeout(() => {
+            logo.classList.remove('glitch-active');
+          }, 200);
+        }
+      }
+      
+      // Trigger random glitch every 3 seconds
+      setInterval(triggerRandomGlitch, 3000);
+      
+      // Enhanced hover effects
+      logoLink?.addEventListener('mouseenter', function() {
+        const particles = logo.querySelectorAll('.particle');
+        particles.forEach((particle, index) => {
+          particle.style.animationDuration = '3s';
+        });
+        
+        const waveBars = logo.querySelectorAll('.wave-bar');
+        waveBars.forEach(bar => {
+          bar.style.animationDuration = '0.8s';
+        });
+      });
+      
+      logoLink?.addEventListener('mouseleave', function() {
+        const particles = logo.querySelectorAll('.particle');
+        particles.forEach(particle => {
+          particle.style.animationDuration = '6s';
+        });
+        
+        const waveBars = logo.querySelectorAll('.wave-bar');
+        waveBars.forEach(bar => {
+          bar.style.animationDuration = '1.5s';
+        });
+      });
+    });
+    
+    // Intersection Observer for performance
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const logo = entry.target;
+        const animatedElements = logo.querySelectorAll('[class*="animation"], [class*="cosmic"], [class*="particle"]');
+        
+        if (entry.isIntersecting) {
+          animatedElements.forEach(el => {
+            el.style.animationPlayState = 'running';
+          });
+        } else {
+          animatedElements.forEach(el => {
+            el.style.animationPlayState = 'paused';
+          });
+        }
+      });
+    });
+    
+    stellarLogos.forEach(logo => {
+      observer.observe(logo);
+    });
+  });
+</script>

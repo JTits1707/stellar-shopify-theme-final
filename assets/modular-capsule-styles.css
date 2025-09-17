@@ -1,0 +1,661 @@
+/* 
+  Stellar Reverb Modular Capsule Styles
+  Specialized styling for capsule-based product organization and storytelling
+*/
+
+/* ===== CAPSULE VARIABLES ===== */
+:root {
+  /* Capsule-specific colors */
+  --capsule-001: #E13CFA; /* Neon Magenta - Genesis */
+  --capsule-002: #28A8D6; /* Cyan Blue - Evolution */
+  --capsule-003: #F4FF30; /* Electric Yellow - Transcendence */
+  --capsule-004: #00F0AC; /* Radioactive Green - Synthesis */
+  --capsule-005: #6C24B3; /* Cosmic Purple - Metamorphosis */
+  
+  /* Capsule gradients */
+  --capsule-001-gradient: linear-gradient(135deg, #E13CFA, #6C24B3);
+  --capsule-002-gradient: linear-gradient(135deg, #28A8D6, #00F0AC);
+  --capsule-003-gradient: linear-gradient(135deg, #F4FF30, #E13CFA);
+  --capsule-004-gradient: linear-gradient(135deg, #00F0AC, #28A8D6);
+  --capsule-005-gradient: linear-gradient(135deg, #6C24B3, #E13CFA);
+  
+  /* Capsule themes */
+  --capsule-spacing: 2rem;
+  --capsule-border-radius: 1.5rem;
+  --capsule-transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ===== CAPSULE CONTAINER ===== */
+.capsule-container {
+  background: linear-gradient(180deg, var(--void-black), #1a0d2e);
+  position: relative;
+  overflow: hidden;
+  padding: var(--capsule-spacing);
+  border-radius: var(--capsule-border-radius);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  transition: var(--capsule-transition);
+}
+
+.capsule-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--capsule-001-gradient);
+  opacity: 0.1;
+  border-radius: inherit;
+  transition: opacity 0.3s ease;
+}
+
+.capsule-container:hover::before {
+  opacity: 0.2;
+}
+
+/* ===== CAPSULE HEADER ===== */
+.capsule-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.capsule-number {
+  font-family: 'Orbitron', monospace;
+  font-weight: 900;
+  font-size: 1.2rem;
+  background: var(--capsule-001-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+}
+
+.capsule-number::before {
+  content: 'TRANSMISSION ';
+  opacity: 0.7;
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.capsule-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1rem;
+  border-radius: 2rem;
+  font-family: 'Orbitron', monospace;
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.capsule-status--active {
+  background: rgba(0, 240, 172, 0.1);
+  border: 2px solid var(--radioactive-green);
+  color: var(--radioactive-green);
+  animation: status-pulse 2s ease-in-out infinite;
+}
+
+.capsule-status--upcoming {
+  background: rgba(244, 255, 48, 0.1);
+  border: 2px solid var(--electric-yellow);
+  color: var(--electric-yellow);
+}
+
+.capsule-status--archived {
+  background: rgba(108, 36, 179, 0.1);
+  border: 2px solid var(--cosmic-purple);
+  color: var(--cosmic-purple);
+}
+
+.capsule-status--classified {
+  background: rgba(225, 60, 250, 0.1);
+  border: 2px solid var(--neon-magenta);
+  color: var(--neon-magenta);
+  position: relative;
+  overflow: hidden;
+}
+
+.capsule-status--classified::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: classified-scan 2s ease-in-out infinite;
+}
+
+/* ===== CAPSULE TITLE ===== */
+.capsule-title {
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  background: var(--capsule-001-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.2;
+  position: relative;
+}
+
+.capsule-title::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: var(--capsule-001-gradient);
+  border-radius: 2px;
+}
+
+/* ===== CAPSULE DESCRIPTION ===== */
+.capsule-description {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  max-width: 600px;
+}
+
+.capsule-lore {
+  background: rgba(40, 168, 214, 0.05);
+  border: 2px solid var(--cyan-blue);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.capsule-lore::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--cyan-blue);
+  animation: lore-scan 3s ease-in-out infinite;
+}
+
+.lore-title {
+  font-family: 'Orbitron', monospace;
+  color: var(--cyan-blue);
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lore-content {
+  color: rgba(255, 255, 255, 0.9);
+  font-style: italic;
+  line-height: 1.5;
+}
+
+/* ===== CAPSULE THEMES ===== */
+.capsule-theme {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-bottom: 2rem;
+}
+
+.theme-tag {
+  background: rgba(225, 60, 250, 0.1);
+  border: 1px solid var(--neon-magenta);
+  color: var(--neon-magenta);
+  padding: 0.3rem 0.8rem;
+  border-radius: 1rem;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.theme-tag:hover {
+  background: var(--neon-magenta);
+  color: var(--void-black);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(225, 60, 250, 0.3);
+}
+
+/* ===== CAPSULE PRODUCTS GRID ===== */
+.capsule-products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.capsule-product-card {
+  background: rgba(13, 13, 13, 0.8);
+  border: 2px solid var(--cyan-blue);
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: var(--capsule-transition);
+  position: relative;
+}
+
+.capsule-product-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--neon-magenta);
+  box-shadow: 0 15px 40px rgba(225, 60, 250, 0.3);
+}
+
+.product-image-container {
+  position: relative;
+  height: 250px;
+  overflow: hidden;
+}
+
+.product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.capsule-product-card:hover .product-image {
+  transform: scale(1.05);
+}
+
+.product-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent 30%, var(--neon-magenta) 50%, transparent 70%);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.capsule-product-card:hover .product-overlay {
+  opacity: 0.1;
+  animation: overlay-sweep 1s ease-out;
+}
+
+.product-info {
+  padding: 1.5rem;
+}
+
+.product-title {
+  font-family: 'Orbitron', monospace;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.product-price {
+  color: var(--electric-yellow);
+  font-family: 'Orbitron', monospace;
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.product-variants {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.variant-swatch {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: 2px solid var(--cyan-blue);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.variant-swatch:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 10px currentColor;
+}
+
+/* ===== CAPSULE STATS ===== */
+.capsule-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.stat-item {
+  background: rgba(40, 168, 214, 0.05);
+  border: 2px solid var(--cyan-blue);
+  border-radius: 0.8rem;
+  padding: 1rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+  border-color: var(--neon-magenta);
+  transform: translateY(-3px);
+}
+
+.stat-number {
+  display: block;
+  font-family: 'Orbitron', monospace;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--electric-yellow);
+  margin-bottom: 0.3rem;
+}
+
+.stat-label {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ===== CAPSULE ACTIONS ===== */
+.capsule-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.capsule-btn {
+  background: var(--capsule-001-gradient);
+  border: none;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 0.8rem;
+  font-family: 'Orbitron', monospace;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.capsule-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(225, 60, 250, 0.4);
+}
+
+.capsule-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.capsule-btn:hover::before {
+  left: 100%;
+}
+
+.capsule-btn--outline {
+  background: transparent;
+  border: 2px solid var(--cyan-blue);
+  color: var(--cyan-blue);
+}
+
+.capsule-btn--outline:hover {
+  background: var(--cyan-blue);
+  color: var(--void-black);
+}
+
+/* ===== CAPSULE TIMELINE ===== */
+.capsule-timeline {
+  position: relative;
+  margin: 3rem 0;
+}
+
+.timeline-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--cyan-blue);
+  transform: translateX(-50%);
+}
+
+.timeline-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.timeline-item:nth-child(even) {
+  flex-direction: row-reverse;
+}
+
+.timeline-content {
+  flex: 1;
+  background: rgba(40, 168, 214, 0.05);
+  border: 2px solid var(--cyan-blue);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin: 0 2rem;
+  position: relative;
+}
+
+.timeline-marker {
+  width: 20px;
+  height: 20px;
+  background: var(--neon-magenta);
+  border-radius: 50%;
+  border: 3px solid var(--void-black);
+  position: relative;
+  z-index: 2;
+  animation: marker-pulse 2s ease-in-out infinite;
+}
+
+.timeline-date {
+  font-family: 'Orbitron', monospace;
+  color: var(--electric-yellow);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.timeline-title {
+  color: var(--cyan-blue);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.timeline-description {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+}
+
+/* ===== CAPSULE VARIANTS ===== */
+.capsule-container[data-capsule="001"] {
+  --current-capsule: var(--capsule-001);
+  --current-gradient: var(--capsule-001-gradient);
+}
+
+.capsule-container[data-capsule="002"] {
+  --current-capsule: var(--capsule-002);
+  --current-gradient: var(--capsule-002-gradient);
+}
+
+.capsule-container[data-capsule="003"] {
+  --current-capsule: var(--capsule-003);
+  --current-gradient: var(--capsule-003-gradient);
+}
+
+.capsule-container[data-capsule="004"] {
+  --current-capsule: var(--capsule-004);
+  --current-gradient: var(--capsule-004-gradient);
+}
+
+.capsule-container[data-capsule="005"] {
+  --current-capsule: var(--capsule-005);
+  --current-gradient: var(--capsule-005-gradient);
+}
+
+.capsule-container[data-capsule] .capsule-number,
+.capsule-container[data-capsule] .capsule-title {
+  background: var(--current-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.capsule-container[data-capsule] .capsule-title::after {
+  background: var(--current-gradient);
+}
+
+.capsule-container[data-capsule] .capsule-btn {
+  background: var(--current-gradient);
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 1024px) {
+  .capsule-products {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+  
+  .capsule-stats {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .capsule-container {
+    padding: 1.5rem;
+  }
+  
+  .capsule-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .capsule-products {
+    grid-template-columns: 1fr;
+  }
+  
+  .capsule-actions {
+    flex-direction: column;
+  }
+  
+  .timeline-item {
+    flex-direction: column !important;
+  }
+  
+  .timeline-content {
+    margin: 1rem 0;
+  }
+  
+  .timeline-line {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .capsule-title {
+    font-size: 1.5rem;
+  }
+  
+  .product-image-container {
+    height: 200px;
+  }
+  
+  .stat-number {
+    font-size: 1.4rem;
+  }
+  
+  .capsule-btn {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes status-pulse {
+  0%, 100% { box-shadow: 0 0 10px var(--radioactive-green); }
+  50% { box-shadow: 0 0 20px var(--radioactive-green); }
+}
+
+@keyframes classified-scan {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+@keyframes lore-scan {
+  0%, 100% { height: 100%; top: 0; }
+  50% { height: 50%; top: 25%; }
+}
+
+@keyframes overlay-sweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes marker-pulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 10px var(--neon-magenta); }
+  50% { transform: scale(1.2); box-shadow: 0 0 20px var(--neon-magenta); }
+}
+
+/* ===== ACCESSIBILITY ===== */
+@media (prefers-reduced-motion: reduce) {
+  .capsule-container,
+  .capsule-product-card,
+  .stat-item,
+  .capsule-btn,
+  .timeline-marker {
+    transition: none;
+    animation: none;
+  }
+  
+  .capsule-product-card:hover {
+    transform: none;
+  }
+  
+  .capsule-btn:hover {
+    transform: none;
+  }
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+  .capsule-container {
+    background: white !important;
+    color: black !important;
+    border: 1px solid black !important;
+  }
+  
+  .capsule-number,
+  .capsule-title {
+    background: none !important;
+    -webkit-text-fill-color: black !important;
+    color: black !important;
+  }
+  
+  .capsule-actions,
+  .product-overlay {
+    display: none !important;
+  }
+}

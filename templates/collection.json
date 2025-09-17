@@ -1,0 +1,18 @@
+{
+"sections": {
+"main": {
+"type": "collection-grid",
+"settings": {
+"show_collection_title": true,
+"show_collection_description": true,
+"show_featured_product": true,
+"low_stock_threshold": 5,
+"show_filter_pills": true,
+"show_motif_tags": true,
+"show_sort_pills": true,
+"products_per_page": 24
+}
+}
+},
+"order": ["main"]
+}

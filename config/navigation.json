@@ -1,0 +1,32 @@
+{
+  "main-menu": {
+    "title": "Main Menu",
+    "links": [
+      { "title": "Transmissions", "url": "/collections/all-transmissions" },
+      { "title": "Floating Archive", "url": "/pages/floating-archive" },
+      { "title": "Universal Lore", "url": "/pages/universal-lore" },
+      { "title": "About", "url": "/pages/about" },
+      { "title": "Signal Seekers", "url": "/account" }
+    ]
+  },
+  "footer-capsules": {
+    "title": "Footer – Capsules",
+    "links": [
+      { "title": "All Capsules", "url": "/collections/all-transmissions" },
+      { "title": "Capsule 001 – On The Event Horizon", "url": "/collections/capsule-001" },
+      { "title": "Capsule 002 – Past The Singularity", "url": "/collections/capsule-002" },
+      { "title": "Capsule 003 – Echoes from the Simulation", "url": "/collections/capsule-003" },
+      { "title": "Capsule 004 – Hollow Moon Archives", "url": "/collections/capsule-004" }
+    ]
+  },
+  "footer-support": {
+    "title": "Footer – Support",
+    "links": [
+      { "title": "FAQ", "url": "/pages/faq" },
+      { "title": "Contact", "url": "/pages/contact" },
+      { "title": "Shipping Info", "url": "/pages/shipping-info" },
+      { "title": "Sizing Guide", "url": "/pages/sizing-guide" },
+      { "title": "Privacy Policy", "url": "/pages/privacy-policy" }
+    ]
+  }
+}

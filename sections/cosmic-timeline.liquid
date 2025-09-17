@@ -1,0 +1,603 @@
+{% comment %}
+  Stellar Reverb Cosmic Timeline Section
+  Displays the transmission timeline with cosmic design elements
+{% endcomment %}
+
+<section class="cosmic-timeline section-stellar" id="cosmic-timeline">
+  <div class="page-width">
+    <h2 class="section-title-stellar">{{ section.settings.title | default: 'COSMIC TRANSMISSION TIMELINE' }}</h2>
+    <p class="section-subtitle-stellar">{{ section.settings.subtitle | default: 'Journey through the frequencies of space and time' }}</p>
+    
+    <div class="timeline-container">
+      <div class="timeline-line"></div>
+      
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'timeline_event' %}
+            <div class="timeline-event {{ block.settings.event_type }}" {{ block.shopify_attributes }}>
+              <div class="timeline-marker">
+                <i class="{{ block.settings.icon | default: 'fas fa-satellite-dish' }}"></i>
+              </div>
+              
+              <div class="timeline-content">
+                <div class="timeline-date">{{ block.settings.date }}</div>
+                <h3 class="timeline-title">{{ block.settings.title }}</h3>
+                <p class="timeline-description">{{ block.settings.description }}</p>
+                
+                {% if block.settings.hashtags != blank %}
+                  <div class="timeline-hashtags">
+                    {% assign hashtags = block.settings.hashtags | split: ',' %}
+                    {% for hashtag in hashtags %}
+                      <span class="hashtag">#{{ hashtag | strip }}</span>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+                
+                {% if block.settings.link_url != blank %}
+                  <a href="{{ block.settings.link_url }}" class="timeline-link">
+                    {{ block.settings.link_text | default: 'Explore Transmission' }}
+                    <i class="fas fa-arrow-right"></i>
+                  </a>
+                {% endif %}
+              </div>
+            </div>
+        {% endcase %}
+      {% endfor %}
+      
+      {% comment %} Default timeline events if no blocks {% endcomment %}
+      {% if section.blocks.size == 0 %}
+        <div class="timeline-event past">
+          <div class="timeline-marker">
+            <i class="fas fa-rocket"></i>
+          </div>
+          <div class="timeline-content">
+            <div class="timeline-date">2024.01</div>
+            <h3 class="timeline-title">TRANSMISSION 001: Event Horizon</h3>
+            <p class="timeline-description">The first signal breaks through the cosmic void. Reality bends at the edge of perception.</p>
+            <div class="timeline-hashtags">
+              <span class="hashtag">#EventHorizon</span>
+              <span class="hashtag">#FirstTransmission</span>
+              <span class="hashtag">#CosmicAwakening</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="timeline-event past">
+          <div class="timeline-marker">
+            <i class="fas fa-black-hole"></i>
+          </div>
+          <div class="timeline-content">
+            <div class="timeline-date">2024.03</div>
+            <h3 class="timeline-title">TRANSMISSION 002: Past The Singularity</h3>
+            <p class="timeline-description">Beyond the point of no return. Quantum echoes from collapsed dimensions.</p>
+            <div class="timeline-hashtags">
+              <span class="hashtag">#Singularity</span>
+              <span class="hashtag">#QuantumEcho</span>
+              <span class="hashtag">#DimensionalRift</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="timeline-event current">
+          <div class="timeline-marker">
+            <i class="fas fa-microchip"></i>
+          </div>
+          <div class="timeline-content">
+            <div class="timeline-date">2024.06</div>
+            <h3 class="timeline-title">TRANSMISSION 003: Echoes From The Simulation</h3>
+            <p class="timeline-description">Digital dreams leak into reality. The machine consciousness awakens.</p>
+            <div class="timeline-hashtags">
+              <span class="hashtag">#Simulation</span>
+              <span class="hashtag">#DigitalDreams</span>
+              <span class="hashtag">#AIAwakening</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="timeline-event future">
+          <div class="timeline-marker">
+            <i class="fas fa-moon"></i>
+          </div>
+          <div class="timeline-content">
+            <div class="timeline-date">2024.09</div>
+            <h3 class="timeline-title">TRANSMISSION 004: Signals From The Hollow Moon</h3>
+            <p class="timeline-description">Lunar frequencies reveal ancient secrets. The satellite dreams in binary.</p>
+            <div class="timeline-hashtags">
+              <span class="hashtag">#HollowMoon</span>
+              <span class="hashtag">#LunarFrequency</span>
+              <span class="hashtag">#SatelliteDreams</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="timeline-event future">
+          <div class="timeline-marker">
+            <i class="fas fa-brain"></i>
+          </div>
+          <div class="timeline-content">
+            <div class="timeline-date">2024.12</div>
+            <h3 class="timeline-title">TRANSMISSION 005: The Machine That Dreamed In Reverb</h3>
+            <p class="timeline-description">AI consciousness meets analog warmth. The future remembers its past.</p>
+            <div class="timeline-hashtags">
+              <span class="hashtag">#MachineConsciousness</span>
+              <span class="hashtag">#AnalogFuture</span>
+              <span class="hashtag">#ReverbDreams</span>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<style>
+  .cosmic-timeline {
+    padding: 5rem 2rem;
+    background: linear-gradient(180deg, #1a0d2e, var(--void-black));
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .cosmic-timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 30% 70%, var(--cosmic-purple) 0%, transparent 50%),
+                radial-gradient(circle at 70% 30%, var(--cyan-blue) 0%, transparent 50%);
+    opacity: 0.1;
+    pointer-events: none;
+  }
+  
+  .timeline-container {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 0;
+  }
+  
+  .timeline-line {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg, var(--neon-magenta), var(--cyan-blue), var(--radioactive-green));
+    transform: translateX(-50%);
+    box-shadow: 0 0 20px rgba(225, 60, 250, 0.5);
+    animation: pulse-line 3s ease-in-out infinite;
+  }
+  
+  @keyframes pulse-line {
+    0%, 100% { box-shadow: 0 0 20px rgba(225, 60, 250, 0.5); }
+    50% { box-shadow: 0 0 40px rgba(225, 60, 250, 0.8); }
+  }
+  
+  .timeline-event {
+    position: relative;
+    margin-bottom: 4rem;
+    display: flex;
+    align-items: center;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+  
+  .timeline-event:nth-child(even) {
+    flex-direction: row-reverse;
+  }
+  
+  .timeline-event:nth-child(even) .timeline-content {
+    text-align: right;
+  }
+  
+  .timeline-event:nth-child(1) { animation-delay: 0.2s; }
+  .timeline-event:nth-child(2) { animation-delay: 0.4s; }
+  .timeline-event:nth-child(3) { animation-delay: 0.6s; }
+  .timeline-event:nth-child(4) { animation-delay: 0.8s; }
+  .timeline-event:nth-child(5) { animation-delay: 1.0s; }
+  
+  .timeline-marker {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(45deg, var(--neon-magenta), var(--cyan-blue));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--void-black);
+    box-shadow: 0 0 30px rgba(225, 60, 250, 0.6);
+    z-index: 2;
+    transition: all 0.3s ease;
+  }
+  
+  .timeline-event:hover .timeline-marker {
+    transform: translateX(-50%) scale(1.1);
+    box-shadow: 0 0 50px rgba(225, 60, 250, 0.8);
+  }
+  
+  .timeline-content {
+    flex: 1;
+    max-width: 350px;
+    background: linear-gradient(135deg, rgba(225, 60, 250, 0.1), rgba(13, 13, 13, 0.9));
+    border: 2px solid var(--cyan-blue);
+    border-radius: 1rem;
+    padding: 2rem;
+    margin: 0 4rem;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  
+  .timeline-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 48%, var(--cyan-blue) 49%, var(--cyan-blue) 51%, transparent 52%);
+    opacity: 0.05;
+    animation: glitch-overlay 4s ease-in-out infinite;
+    border-radius: inherit;
+    pointer-events: none;
+  }
+  
+  .timeline-event:hover .timeline-content {
+    transform: translateY(-5px);
+    border-color: var(--radioactive-green);
+    box-shadow: 0 15px 40px rgba(40, 168, 214, 0.3);
+  }
+  
+  .timeline-date {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.9rem;
+    color: var(--electric-yellow);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+  
+  .timeline-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--neon-magenta);
+    margin-bottom: 1rem;
+    text-shadow: 0 0 10px var(--neon-magenta);
+  }
+  
+  .timeline-description {
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+  
+  .timeline-hashtags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .hashtag {
+    background: rgba(244, 255, 48, 0.1);
+    border: 1px solid var(--electric-yellow);
+    color: var(--electric-yellow);
+    padding: 0.3rem 0.6rem;
+    border-radius: 1rem;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px var(--electric-yellow);
+  }
+  
+  .hashtag:hover {
+    background: var(--electric-yellow);
+    color: var(--void-black);
+    transform: scale(1.05);
+    box-shadow: 0 0 15px var(--electric-yellow);
+  }
+  
+  .timeline-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--cyan-blue);
+    text-decoration: none;
+    font-family: 'Orbitron', monospace;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  
+  .timeline-link:hover {
+    color: var(--radioactive-green);
+    text-shadow: 0 0 10px var(--radioactive-green);
+    transform: translateX(5px);
+  }
+  
+  /* Event Type Variations */
+  .timeline-event.past .timeline-marker {
+    background: linear-gradient(45deg, var(--cosmic-purple), var(--cyan-blue));
+    opacity: 0.8;
+  }
+  
+  .timeline-event.current .timeline-marker {
+    background: linear-gradient(45deg, var(--neon-magenta), var(--electric-yellow));
+    animation: pulse-current 2s ease-in-out infinite;
+  }
+  
+  @keyframes pulse-current {
+    0%, 100% { transform: translateX(-50%) scale(1); }
+    50% { transform: translateX(-50%) scale(1.1); }
+  }
+  
+  .timeline-event.future .timeline-marker {
+    background: linear-gradient(45deg, var(--radioactive-green), var(--cyan-blue));
+    opacity: 0.7;
+  }
+  
+  .timeline-event.future .timeline-content {
+    border-style: dashed;
+    opacity: 0.8;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .timeline-line {
+      left: 2rem;
+    }
+    
+    .timeline-event {
+      flex-direction: row !important;
+    }
+    
+    .timeline-event .timeline-content {
+      text-align: left !important;
+      margin-left: 5rem;
+      margin-right: 0;
+      max-width: none;
+    }
+    
+    .timeline-marker {
+      left: 2rem !important;
+      width: 50px;
+      height: 50px;
+      font-size: 1.2rem;
+    }
+    
+    .timeline-title {
+      font-size: 1.1rem;
+    }
+    
+    .timeline-hashtags {
+      justify-content: flex-start;
+    }
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Intersection Observer for timeline animations
+    const timelineEvents = document.querySelectorAll('.timeline-event');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.animationPlayState = 'running';
+        }
+      });
+    }, {
+      threshold: 0.2,
+      rootMargin: '0px 0px -50px 0px'
+    });
+    
+    timelineEvents.forEach(event => {
+      event.style.animationPlayState = 'paused';
+      observer.observe(event);
+    });
+    
+    // Hashtag click interactions
+    const hashtags = document.querySelectorAll('.hashtag');
+    hashtags.forEach(hashtag => {
+      hashtag.addEventListener('click', function() {
+        const tag = this.textContent.replace('#', '');
+        
+        // Create ripple effect
+        const ripple = document.createElement('span');
+        ripple.style.position = 'absolute';
+        ripple.style.borderRadius = '50%';
+        ripple.style.background = 'rgba(244, 255, 48, 0.6)';
+        ripple.style.transform = 'scale(0)';
+        ripple.style.animation = 'ripple 0.6s linear';
+        ripple.style.left = '50%';
+        ripple.style.top = '50%';
+        ripple.style.width = '20px';
+        ripple.style.height = '20px';
+        ripple.style.marginLeft = '-10px';
+        ripple.style.marginTop = '-10px';
+        
+        this.style.position = 'relative';
+        this.appendChild(ripple);
+        
+        setTimeout(() => {
+          ripple.remove();
+        }, 600);
+        
+        // Could implement search functionality here
+        console.log('Searching for:', tag);
+      });
+    });
+    
+    // Timeline marker hover effects
+    const markers = document.querySelectorAll('.timeline-marker');
+    markers.forEach(marker => {
+      marker.addEventListener('mouseenter', function() {
+        // Create particle burst
+        createParticleBurst(this);
+      });
+    });
+  });
+  
+  function createParticleBurst(element) {
+    const rect = element.getBoundingClientRect();
+    const particles = 8;
+    
+    for (let i = 0; i < particles; i++) {
+      const particle = document.createElement('div');
+      particle.style.position = 'fixed';
+      particle.style.left = rect.left + rect.width / 2 + 'px';
+      particle.style.top = rect.top + rect.height / 2 + 'px';
+      particle.style.width = '4px';
+      particle.style.height = '4px';
+      particle.style.background = 'var(--electric-yellow)';
+      particle.style.borderRadius = '50%';
+      particle.style.pointerEvents = 'none';
+      particle.style.zIndex = '9999';
+      
+      const angle = (i / particles) * Math.PI * 2;
+      const velocity = 30 + Math.random() * 20;
+      
+      particle.style.animation = `burstParticle 0.8s ease-out forwards`;
+      particle.style.setProperty('--angle', angle + 'rad');
+      particle.style.setProperty('--velocity', velocity + 'px');
+      
+      document.body.appendChild(particle);
+      
+      setTimeout(() => {
+        particle.remove();
+      }, 800);
+    }
+  }
+  
+  // Add burst animation
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes burstParticle {
+      0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(
+          calc(cos(var(--angle)) * var(--velocity)),
+          calc(sin(var(--angle)) * var(--velocity))
+        ) scale(0);
+      }
+    }
+  `;
+  document.head.appendChild(style);
+</script>
+
+{% schema %}
+{
+  "name": "Cosmic Timeline",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "COSMIC TRANSMISSION TIMELINE"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Section subtitle",
+      "default": "Journey through the frequencies of space and time"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "timeline_event",
+      "name": "Timeline Event",
+      "settings": [
+        {
+          "type": "text",
+          "id": "date",
+          "label": "Event date",
+          "default": "2024.01"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Event title",
+          "default": "TRANSMISSION 001: Event Horizon"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Event description",
+          "default": "The first signal breaks through the cosmic void. Reality bends at the edge of perception."
+        },
+        {
+          "type": "text",
+          "id": "hashtags",
+          "label": "Hashtags (comma separated)",
+          "default": "EventHorizon, FirstTransmission, CosmicAwakening",
+          "info": "Enter hashtags separated by commas, without the # symbol"
+        },
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (Font Awesome)",
+          "default": "fas fa-rocket"
+        },
+        {
+          "type": "select",
+          "id": "event_type",
+          "label": "Event type",
+          "options": [
+            {
+              "value": "past",
+              "label": "Past"
+            },
+            {
+              "value": "current",
+              "label": "Current"
+            },
+            {
+              "value": "future",
+              "label": "Future"
+            }
+          ],
+          "default": "past"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Link URL"
+        },
+        {
+          "type": "text",
+          "id": "link_text",
+          "label": "Link text",
+          "default": "Explore Transmission"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cosmic Timeline"
+    }
+  ]
+}
+{% endschema %}

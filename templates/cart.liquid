@@ -1,0 +1,69 @@
+{% comment %} Cart Template - Signal Cart {% endcomment %}
+
+
+  
+    
+      SIGNAL CART
+      
+        
+        TRANSMISSION READY
+      
+    
+
+    {% if cart.item_count == 0 %}
+      
+        
+          
+        
+        NO SIGNALS DETECTED
+        Your cosmic frequency is silent. Explore the archive to find your resonance.
+        EXPLORE ARCHIVE
+      
+    {% else %}
+      
+        
+          {% for item in cart.items %}
+            
+              
+                
+              
+              
+              
+                {{ item.product.title }}
+                {% if item.variant.title != 'Default Title' %}
+                  {{ item.variant.title }}
+                {% endif %}
+                {{ item.final_price | money }}
+              
+
+              
+                -
+                
+                +
+              
+
+              {{ item.final_line_price | money }}
+              
+              
+                
+              
+            
+          {% endfor %}
+        
+
+        
+          
+            TOTAL FREQUENCY:
+            {{ cart.total_price | money }}
+          
+          
+          
+            UPDATE SIGNAL
+            
+              TRANSMIT ORDER
+            
+          
+        
+      
+    {% endif %}
+  

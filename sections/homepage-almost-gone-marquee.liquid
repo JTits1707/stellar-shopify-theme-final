@@ -1,0 +1,30 @@
+{% comment %}
+  Stellar Reverb – Homepage Almost Gone Marquee
+  Shows low stock / urgency messages in a scrolling marquee.
+{% endcomment %}
+<div class="almost-gone-marquee bg-black border-y border-pink-500 py-2 overflow-hidden">
+  <div class="marquee-track flex gap-12 animate-marquee text-sm font-orbitron text-yellow-300 uppercase tracking-wide">
+    <span>⚠ Almost Gone • Only a Few Relics Left</span>
+    <span>⚡ Limited Transmission • Don’t Miss Out</span>
+    <span>🚀 Secure Your Capsule Now</span>
+    <span>⚠ Almost Gone • Only a Few Relics Left</span>
+  </div>
+</div>
+
+<style>
+  .animate-marquee {
+    white-space: nowrap;
+    animation: scroll-left 18s linear infinite;
+  }
+  @keyframes scroll-left {
+    from { transform: translateX(0%); }
+    to { transform: translateX(-50%); }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Homepage Almost Gone Marquee",
+  "settings": []
+}
+{% endschema %}

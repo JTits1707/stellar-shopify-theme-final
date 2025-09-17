@@ -1,0 +1,76 @@
+{% comment %} Search Template - Frequency Scanner {% endcomment %}
+
+
+  
+    
+      FREQUENCY SCANNER
+      Scan the cosmic archive for specific frequencies and signals
+    
+
+    
+      
+        
+          
+          
+            
+            SCAN
+          
+        
+      
+    
+
+    {% if search.performed %}
+      
+        
+          {% if search.results_count == 0 %}
+            NO SIGNALS DETECTED
+            Your search for "{{ search.terms }}" returned no matches.
+          {% else %}
+            {{ search.results_count }} SIGNALS DETECTED
+            Frequency matches for "{{ search.terms }}"
+          {% endif %}
+        
+
+        {% if search.results_count > 0 %}
+          {% paginate search.results by 24 %}
+            
+              {% for item in search.results %}
+                {% case item.object_type %}
+                  {% when 'product' %}
+                    {% render 'product-card', product: item %}
+                  {% when 'article' %}
+                    
+                      {{ item.title }}
+                      {{ item.summary | truncate: 150 }}
+                      {{ item.published_at | date: '%B %d, %Y' }}
+                    
+                  {% when 'page' %}
+                    
+                      {{ item.title }}
+                      {{ item.content | strip_html | truncate: 150 }}
+                    
+                {% endcase %}
+              {% endfor %}
+            
+
+            {% if paginate.pages > 1 %}
+              {% render 'pagination', paginate: paginate %}
+            {% endif %}
+          {% endpaginate %}
+        {% else %}
+          
+            
+              
+            
+            EXPAND YOUR SEARCH PARAMETERS
+            Try different keywords, check spelling, or explore our main collections:
+            
+              All Products
+              Capsule Drops
+              Cosmic Accessories
+            
+          
+        {% endif %}
+      
+    {% endif %}
+  

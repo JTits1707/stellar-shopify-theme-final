@@ -1,0 +1,562 @@
+{% comment %}
+  Stellar Reverb Stock Badge Snippet
+  Dynamic stock level indicators with urgency styling
+{% endcomment %}
+
+{% assign product = product | default: product %}
+{% assign variant = variant | default: product.selected_or_first_available_variant %}
+{% assign show_exact_count = show_exact_count | default: false %}
+{% assign badge_style = badge_style | default: 'cosmic' %}
+{% assign position = position | default: 'top-right' %}
+
+{% if variant %}
+  {% assign inventory = variant.inventory_quantity %}
+  {% assign inventory_policy = variant.inventory_policy %}
+  {% assign inventory_management = variant.inventory_management %}
+  
+  {% comment %} Determine stock level and badge type {% endcomment %}
+  {% assign badge_type = 'available' %}
+  {% assign badge_text = 'In Stock' %}
+  {% assign badge_icon = 'fas fa-check-circle' %}
+  
+  {% if variant.available == false %}
+    {% assign badge_type = 'out-of-stock' %}
+    {% assign badge_text = 'Out of Stock' %}
+    {% assign badge_icon = 'fas fa-times-circle' %}
+  {% elsif inventory_management == 'shopify' and inventory <= 10 and inventory > 0 %}
+    {% if inventory <= 3 %}
+      {% assign badge_type = 'critical' %}
+      {% if show_exact_count %}
+        {% assign badge_text = inventory | append: ' LEFT!' %}
+      {% else %}
+        {% assign badge_text = 'Almost Gone!' %}
+      {% endif %}
+      {% assign badge_icon = 'fas fa-exclamation-triangle' %}
+    {% elsif inventory <= 5 %}
+      {% assign badge_type = 'low' %}
+      {% if show_exact_count %}
+        {% assign badge_text = inventory | append: ' Left' %}
+      {% else %}
+        {% assign badge_text = 'Low Stock' %}
+      {% endif %}
+      {% assign badge_icon = 'fas fa-exclamation-circle' %}
+    {% elsif inventory <= 10 %}
+      {% assign badge_type = 'limited' %}
+      {% assign badge_text = 'Limited' %}
+      {% assign badge_icon = 'fas fa-star' %}
+    {% endif %}
+  {% elsif inventory_policy == 'continue' and inventory <= 0 %}
+    {% assign badge_type = 'backorder' %}
+    {% assign badge_text = 'Pre-Order' %}
+    {% assign badge_icon = 'fas fa-clock' %}
+  {% endif %}
+  
+  {% comment %} Special handling for limited edition products {% endcomment %}
+  {% if product.tags contains 'limited-edition' %}
+    {% assign badge_type = 'limited-edition' %}
+    {% assign badge_text = 'Limited Edition' %}
+    {% assign badge_icon = 'fas fa-gem' %}
+  {% endif %}
+  
+  {% comment %} Special handling for new products {% endcomment %}
+  {% assign days_since_created = 'now' | date: '%s' | minus: product.created_at | date: '%s' | divided_by: 86400 %}
+  {% if days_since_created <= 7 and badge_type == 'available' %}
+    {% assign badge_type = 'new' %}
+    {% assign badge_text = 'New' %}
+    {% assign badge_icon = 'fas fa-sparkles' %}
+  {% endif %}
+  
+  {% comment %} Special handling for sale products {% endcomment %}
+  {% if variant.compare_at_price > variant.price %}
+    {% assign sale_percentage = variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price %}
+    {% assign badge_type = 'sale' %}
+    {% assign badge_text = sale_percentage | append: '% Off' %}
+    {% assign badge_icon = 'fas fa-fire' %}
+  {% endif %}
+
+<div class="stock-badge stock-badge--{{ badge_type }} stock-badge--{{ badge_style }} stock-badge--{{ position }}" 
+     data-variant-id="{{ variant.id }}" 
+     data-inventory="{{ inventory }}"
+     data-badge-type="{{ badge_type }}">
+  
+  {% if badge_style == 'cosmic' %}
+    <!-- Cosmic Style Badge -->
+    <div class="badge-cosmic">
+      <div class="badge-content">
+        <i class="{{ badge_icon }}"></i>
+        <span class="badge-text">{{ badge_text }}</span>
+      </div>
+      
+      {% if badge_type == 'critical' %}
+        <div class="urgency-pulse"></div>
+      {% endif %}
+      
+      {% if badge_type == 'limited-edition' %}
+        <div class="limited-sparkle">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+        </div>
+      {% endif %}
+      
+      <div class="badge-glow"></div>
+    </div>
+    
+  {% elsif badge_style == 'minimal' %}
+    <!-- Minimal Style Badge -->
+    <div class="badge-minimal">
+      <span class="badge-text">{{ badge_text }}</span>
+    </div>
+    
+  {% elsif badge_style == 'detailed' %}
+    <!-- Detailed Style Badge -->
+    <div class="badge-detailed">
+      <div class="badge-header">
+        <i class="{{ badge_icon }}"></i>
+        <span class="badge-title">Stock Status</span>
+      </div>
+      <div class="badge-body">
+        <span class="badge-text">{{ badge_text }}</span>
+        {% if show_exact_count and inventory_management == 'shopify' and inventory > 0 %}
+          <span class="badge-count">{{ inventory }} available</span>
+        {% endif %}
+      </div>
+    </div>
+    
+  {% else %}
+    <!-- Default Style Badge -->
+    <div class="badge-default">
+      <i class="{{ badge_icon }}"></i>
+      <span class="badge-text">{{ badge_text }}</span>
+    </div>
+  {% endif %}
+  
+</div>
+
+<style>
+  .stock-badge {
+    position: absolute;
+    z-index: 10;
+    pointer-events: none;
+    font-family: 'Orbitron', monospace;
+    font-weight: 600;
+    font-size: 0.8rem;
+    line-height: 1;
+  }
+  
+  /* Position Variants */
+  .stock-badge--top-left {
+    top: 0.5rem;
+    left: 0.5rem;
+  }
+  
+  .stock-badge--top-right {
+    top: 0.5rem;
+    right: 0.5rem;
+  }
+  
+  .stock-badge--bottom-left {
+    bottom: 0.5rem;
+    left: 0.5rem;
+  }
+  
+  .stock-badge--bottom-right {
+    bottom: 0.5rem;
+    right: 0.5rem;
+  }
+  
+  .stock-badge--center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  /* ===== COSMIC STYLE ===== */
+  .badge-cosmic {
+    position: relative;
+    background: rgba(13, 13, 13, 0.9);
+    border-radius: 1rem;
+    padding: 0.4rem 0.8rem;
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+  }
+  
+  .badge-content {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .badge-glow {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: inherit;
+    opacity: 0.8;
+    z-index: 1;
+  }
+  
+  /* Critical Stock */
+  .stock-badge--critical .badge-cosmic {
+    border: 2px solid #ff4444;
+    color: #ff4444;
+    animation: critical-pulse 1.5s ease-in-out infinite;
+  }
+  
+  .stock-badge--critical .badge-glow {
+    background: linear-gradient(45deg, #ff4444, #ff6b6b);
+    animation: critical-glow 2s ease-in-out infinite;
+  }
+  
+  .urgency-pulse {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    border: 2px solid #ff4444;
+    border-radius: inherit;
+    transform: translate(-50%, -50%);
+    animation: urgency-expand 2s ease-out infinite;
+  }
+  
+  /* Low Stock */
+  .stock-badge--low .badge-cosmic {
+    border: 2px solid var(--electric-yellow);
+    color: var(--electric-yellow);
+  }
+  
+  .stock-badge--low .badge-glow {
+    background: linear-gradient(45deg, var(--electric-yellow), #ffeb3b);
+  }
+  
+  /* Limited Stock */
+  .stock-badge--limited .badge-cosmic {
+    border: 2px solid var(--neon-magenta);
+    color: var(--neon-magenta);
+  }
+  
+  .stock-badge--limited .badge-glow {
+    background: linear-gradient(45deg, var(--neon-magenta), var(--cosmic-purple));
+  }
+  
+  /* Limited Edition */
+  .stock-badge--limited-edition .badge-cosmic {
+    border: 2px solid var(--radioactive-green);
+    color: var(--radioactive-green);
+    background: linear-gradient(135deg, rgba(0, 240, 172, 0.1), rgba(108, 36, 179, 0.1));
+  }
+  
+  .stock-badge--limited-edition .badge-glow {
+    background: linear-gradient(45deg, var(--radioactive-green), var(--cyan-blue));
+    animation: limited-shimmer 3s ease-in-out infinite;
+  }
+  
+  .limited-sparkle {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    display: flex;
+    gap: 2px;
+  }
+  
+  .limited-sparkle i {
+    font-size: 0.6rem;
+    color: var(--radioactive-green);
+    animation: sparkle-twinkle 2s ease-in-out infinite;
+  }
+  
+  .limited-sparkle i:nth-child(2) {
+    animation-delay: 0.5s;
+  }
+  
+  .limited-sparkle i:nth-child(3) {
+    animation-delay: 1s;
+  }
+  
+  /* New Product */
+  .stock-badge--new .badge-cosmic {
+    border: 2px solid var(--cyan-blue);
+    color: var(--cyan-blue);
+    background: linear-gradient(135deg, rgba(40, 168, 214, 0.1), rgba(244, 255, 48, 0.1));
+  }
+  
+  .stock-badge--new .badge-glow {
+    background: linear-gradient(45deg, var(--cyan-blue), var(--electric-yellow));
+    animation: new-glow 2.5s ease-in-out infinite;
+  }
+  
+  /* Sale */
+  .stock-badge--sale .badge-cosmic {
+    border: 2px solid #ff6b35;
+    color: #ff6b35;
+    background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(255, 68, 68, 0.1));
+    animation: sale-bounce 2s ease-in-out infinite;
+  }
+  
+  .stock-badge--sale .badge-glow {
+    background: linear-gradient(45deg, #ff6b35, #ff4444);
+    animation: sale-fire 1.5s ease-in-out infinite;
+  }
+  
+  /* Available */
+  .stock-badge--available .badge-cosmic {
+    border: 2px solid var(--radioactive-green);
+    color: var(--radioactive-green);
+  }
+  
+  .stock-badge--available .badge-glow {
+    background: linear-gradient(45deg, var(--radioactive-green), var(--cyan-blue));
+  }
+  
+  /* Out of Stock */
+  .stock-badge--out-of-stock .badge-cosmic {
+    border: 2px solid #666;
+    color: #999;
+    background: rgba(102, 102, 102, 0.1);
+  }
+  
+  .stock-badge--out-of-stock .badge-glow {
+    background: linear-gradient(45deg, #666, #999);
+    opacity: 0.3;
+  }
+  
+  /* Backorder */
+  .stock-badge--backorder .badge-cosmic {
+    border: 2px solid var(--cosmic-purple);
+    color: var(--cosmic-purple);
+  }
+  
+  .stock-badge--backorder .badge-glow {
+    background: linear-gradient(45deg, var(--cosmic-purple), var(--neon-magenta));
+  }
+  
+  /* ===== MINIMAL STYLE ===== */
+  .badge-minimal {
+    background: rgba(13, 13, 13, 0.8);
+    color: white;
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.3rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  .stock-badge--critical .badge-minimal {
+    background: #ff4444;
+    color: white;
+  }
+  
+  .stock-badge--low .badge-minimal {
+    background: var(--electric-yellow);
+    color: var(--void-black);
+  }
+  
+  .stock-badge--sale .badge-minimal {
+    background: #ff6b35;
+    color: white;
+  }
+  
+  /* ===== DETAILED STYLE ===== */
+  .badge-detailed {
+    background: rgba(13, 13, 13, 0.95);
+    border: 2px solid var(--cyan-blue);
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    min-width: 120px;
+    backdrop-filter: blur(10px);
+  }
+  
+  .badge-header {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-bottom: 0.3rem;
+    color: var(--cyan-blue);
+    font-size: 0.7rem;
+  }
+  
+  .badge-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  
+  .badge-count {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  /* ===== DEFAULT STYLE ===== */
+  .badge-default {
+    background: var(--cyan-blue);
+    color: var(--void-black);
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.3rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  
+  .stock-badge--critical .badge-default {
+    background: #ff4444;
+    color: white;
+  }
+  
+  .stock-badge--sale .badge-default {
+    background: #ff6b35;
+    color: white;
+  }
+  
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .stock-badge {
+      font-size: 0.7rem;
+    }
+    
+    .badge-cosmic,
+    .badge-minimal,
+    .badge-default {
+      padding: 0.25rem 0.5rem;
+    }
+    
+    .badge-detailed {
+      min-width: 100px;
+      padding: 0.4rem;
+    }
+    
+    .limited-sparkle {
+      display: none;
+    }
+  }
+  
+  /* ===== ANIMATIONS ===== */
+  @keyframes critical-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+  
+  @keyframes critical-glow {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
+  }
+  
+  @keyframes urgency-expand {
+    0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
+  }
+  
+  @keyframes limited-shimmer {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
+  }
+  
+  @keyframes sparkle-twinkle {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.2); }
+  }
+  
+  @keyframes new-glow {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+  
+  @keyframes sale-bounce {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+  
+  @keyframes sale-fire {
+    0%, 100% { opacity: 0.8; }
+    25% { opacity: 1; }
+    75% { opacity: 0.9; }
+  }
+  
+  /* ===== ACCESSIBILITY ===== */
+  @media (prefers-reduced-motion: reduce) {
+    .stock-badge * {
+      animation: none !important;
+    }
+  }
+  
+  /* ===== PRINT STYLES ===== */
+  @media print {
+    .stock-badge {
+      position: static;
+      display: inline-block;
+      margin: 0.2rem;
+    }
+    
+    .badge-glow,
+    .urgency-pulse,
+    .limited-sparkle {
+      display: none;
+    }
+    
+    .badge-cosmic,
+    .badge-minimal,
+    .badge-detailed,
+    .badge-default {
+      background: white !important;
+      color: black !important;
+      border: 1px solid black !important;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Update stock badges when variants change
+    document.addEventListener('variantChanged', function(e) {
+      const { variantId } = e.detail;
+      const stockBadges = document.querySelectorAll(`[data-variant-id="${variantId}"]`);
+      
+      stockBadges.forEach(badge => {
+        // Add loading state
+        badge.style.opacity = '0.5';
+        
+        // Simulate API call to get updated stock info
+        setTimeout(() => {
+          badge.style.opacity = '1';
+          
+          // In a real implementation, you would update the badge content
+          // based on the new variant's inventory
+          console.log(`Updated stock badge for variant ${variantId}`);
+        }, 300);
+      });
+    });
+    
+    // Add intersection observer for performance
+    const stockBadges = document.querySelectorAll('.stock-badge');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+    
+    stockBadges.forEach(badge => {
+      observer.observe(badge);
+    });
+    
+    // Add hover effects for interactive badges
+    stockBadges.forEach(badge => {
+      badge.addEventListener('mouseenter', function() {
+        this.style.transform = 'scale(1.05)';
+        this.style.transition = 'transform 0.2s ease';
+      });
+      
+      badge.addEventListener('mouseleave', function() {
+        this.style.transform = 'scale(1)';
+      });
+    });
+  });
+</script>
+
+{% endif %}

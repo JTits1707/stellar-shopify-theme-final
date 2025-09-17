@@ -1,0 +1,18 @@
+{% layout 'theme' %}
+
+<article class="sr-article-wrap sr-container">
+  <header class="sr-article-header">
+    <h1 class="sr-article-title">{{ article.title }}</h1>
+    <p class="sr-article-date">Published {{ article.published_at | date: '%B %d, %Y' }}</p>
+  </header>
+
+  {% if article.image %}
+    <div class="sr-article-image">
+      <img src="{{ article.image | img_url: '1200x' }}" alt="{{ article.title }}">
+    </div>
+  {% endif %}
+
+  <div class="sr-article-body rte">
+    {{ article.content }}
+  </div>
+</article>

@@ -1,0 +1,568 @@
+{% comment %}
+  Stellar Reverb Modular Capsule Section
+  Displays individual capsule with products and lore
+{% endcomment %}
+
+<section class="modular-capsule section-stellar" data-capsule="{{ section.settings.capsule_number }}">
+  <div class="page-width">
+    
+    <!-- Capsule Header -->
+    <div class="capsule-header">
+      <div class="capsule-meta">
+        <span class="capsule-number">TRANSMISSION {{ section.settings.capsule_number | sprintf: '%03d' }}</span>
+        <span class="capsule-status">{{ section.settings.capsule_status | default: 'ACTIVE' }}</span>
+      </div>
+      
+      <h2 class="capsule-title">{{ section.settings.capsule_title }}</h2>
+      
+      {% if section.settings.capsule_subtitle %}
+        <p class="capsule-subtitle">{{ section.settings.capsule_subtitle }}</p>
+      {% endif %}
+      
+      {% if section.settings.capsule_description %}
+        <div class="capsule-description">
+          {{ section.settings.capsule_description }}
+        </div>
+      {% endif %}
+    </div>
+    
+    <!-- Capsule Visual -->
+    {% if section.settings.capsule_image %}
+      <div class="capsule-visual">
+        <img 
+          src="{{ section.settings.capsule_image | image_url: width: 1200 }}" 
+          alt="{{ section.settings.capsule_title }}"
+          class="capsule-image"
+          loading="lazy"
+        >
+        
+        {% if section.settings.show_decode_button %}
+          <button class="decode-transmission-btn" onclick="openDecodeModal('{{ section.id }}')">
+            <i class="fas fa-satellite-dish"></i>
+            DECODE TRANSMISSION
+          </button>
+        {% endif %}
+      </div>
+    {% endif %}
+    
+    <!-- Products Grid -->
+    {% if section.settings.collection %}
+      <div class="capsule-products">
+        <h3 class="products-title">Available Transmissions</h3>
+        
+        <div class="grid-stellar grid-stellar--{{ section.settings.products_per_row | default: 4 }}">
+          {% for product in collections[section.settings.collection].products limit: section.settings.products_limit %}
+            {% render 'product-card-stellar', product: product, show_capsule_info: false %}
+          {% endfor %}
+        </div>
+        
+        {% if collections[section.settings.collection].products.size > section.settings.products_limit %}
+          <div class="capsule-cta">
+            <a href="{{ collections[section.settings.collection].url }}" class="btn-stellar btn-stellar--outline">
+              <i class="fas fa-arrow-right"></i>
+              VIEW ALL {{ section.settings.capsule_title | upcase }} TRANSMISSIONS
+            </a>
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+    
+    <!-- Capsule Lore -->
+    {% if section.settings.show_lore and section.settings.capsule_lore %}
+      <div class="capsule-lore">
+        <h3 class="lore-title">Transmission Lore</h3>
+        <div class="lore-content">
+          {{ section.settings.capsule_lore }}
+        </div>
+      </div>
+    {% endif %}
+    
+  </div>
+  
+  <!-- Decode Modal -->
+  {% if section.settings.show_decode_button %}
+    <div class="decode-modal" id="decode-modal-{{ section.id }}" style="display: none;">
+      <div class="decode-modal-content">
+        <div class="decode-header">
+          <h3 class="decode-title">DECODING TRANSMISSION {{ section.settings.capsule_number | sprintf: '%03d' }}</h3>
+          <button class="decode-close" onclick="closeDecodeModal('{{ section.id }}')">&times;</button>
+        </div>
+        
+        <div class="decode-body">
+          <div class="waveform-container">
+            <div class="waveform-line"></div>
+            <div class="waveform-line"></div>
+            <div class="waveform-line"></div>
+            <div class="waveform-line"></div>
+            <div class="waveform-line"></div>
+          </div>
+          
+          <div class="decode-text">
+            {{ section.settings.decode_content | default: section.settings.capsule_lore }}
+          </div>
+          
+          {% if section.settings.decode_audio %}
+            <audio controls class="decode-audio">
+              <source src="{{ section.settings.decode_audio }}" type="audio/mpeg">
+              Your browser does not support the audio element.
+            </audio>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+</section>
+
+<style>
+  .modular-capsule {
+    padding: 5rem 2rem;
+    background: linear-gradient(135deg, rgba(13, 13, 13, 0.95), rgba(108, 36, 179, 0.1));
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .modular-capsule::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 30% 70%, var(--neon-magenta) 0%, transparent 50%);
+    opacity: 0.05;
+    pointer-events: none;
+  }
+  
+  .capsule-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .capsule-meta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .capsule-number {
+    background: linear-gradient(45deg, var(--electric-yellow), #ff6b35);
+    color: var(--void-black);
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+  
+  .capsule-status {
+    background: var(--radioactive-green);
+    color: var(--void-black);
+    padding: 0.3rem 0.8rem;
+    border-radius: 1rem;
+    font-family: 'Orbitron', monospace;
+    font-weight: 600;
+    font-size: 0.8rem;
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+  
+  .capsule-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 3rem;
+    font-weight: 900;
+    background: linear-gradient(45deg, var(--neon-magenta), var(--cyan-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 30px var(--neon-magenta);
+  }
+  
+  .capsule-subtitle {
+    color: var(--electric-yellow);
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+  }
+  
+  .capsule-description {
+    max-width: 800px;
+    margin: 0 auto;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.7;
+    font-size: 1.1rem;
+  }
+  
+  .capsule-visual {
+    position: relative;
+    margin: 3rem 0;
+    text-align: center;
+  }
+  
+  .capsule-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 1rem;
+    border: 3px solid var(--cyan-blue);
+    box-shadow: 0 0 40px rgba(40, 168, 214, 0.3);
+  }
+  
+  .decode-transmission-btn {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(45deg, var(--neon-magenta), var(--cosmic-purple));
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    font-family: 'Orbitron', monospace;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(225, 60, 250, 0.5);
+  }
+  
+  .decode-transmission-btn:hover {
+    transform: translateX(-50%) translateY(-5px);
+    box-shadow: 0 0 30px rgba(225, 60, 250, 0.8);
+  }
+  
+  .decode-transmission-btn i {
+    margin-right: 0.5rem;
+    animation: rotate-pulse 3s ease-in-out infinite;
+  }
+  
+  .capsule-products {
+    margin: 4rem 0;
+  }
+  
+  .products-title {
+    font-family: 'Orbitron', monospace;
+    color: var(--cyan-blue);
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  
+  .capsule-cta {
+    text-align: center;
+    margin-top: 2rem;
+  }
+  
+  .capsule-lore {
+    background: rgba(225, 60, 250, 0.05);
+    border: 2px solid var(--neon-magenta);
+    border-radius: 1rem;
+    padding: 2rem;
+    margin-top: 3rem;
+  }
+  
+  .lore-title {
+    font-family: 'Orbitron', monospace;
+    color: var(--neon-magenta);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+  }
+  
+  .lore-content {
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.7;
+  }
+  
+  /* Decode Modal */
+  .decode-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(10px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+  }
+  
+  .decode-modal.active {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .decode-modal-content {
+    background: linear-gradient(135deg, var(--void-black), rgba(225, 60, 250, 0.1));
+    border: 2px solid var(--neon-magenta);
+    border-radius: 1rem;
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    transform: scale(0.8);
+    transition: all 0.3s ease;
+  }
+  
+  .decode-modal.active .decode-modal-content {
+    transform: scale(1);
+  }
+  
+  .decode-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 2px solid var(--cyan-blue);
+  }
+  
+  .decode-title {
+    font-family: 'Orbitron', monospace;
+    color: var(--neon-magenta);
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+  
+  .decode-close {
+    background: none;
+    border: 2px solid var(--neon-magenta);
+    color: var(--neon-magenta);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+  }
+  
+  .decode-close:hover {
+    background: var(--neon-magenta);
+    color: var(--void-black);
+    transform: rotate(90deg);
+  }
+  
+  .decode-body {
+    padding: 2rem;
+  }
+  
+  .waveform-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.3rem;
+    margin-bottom: 2rem;
+    height: 60px;
+  }
+  
+  .waveform-line {
+    width: 4px;
+    background: var(--radioactive-green);
+    border-radius: 2px;
+    animation: waveform 1.5s ease-in-out infinite;
+  }
+  
+  .waveform-line:nth-child(1) { height: 20px; animation-delay: 0s; }
+  .waveform-line:nth-child(2) { height: 40px; animation-delay: 0.2s; }
+  .waveform-line:nth-child(3) { height: 60px; animation-delay: 0.4s; }
+  .waveform-line:nth-child(4) { height: 35px; animation-delay: 0.6s; }
+  .waveform-line:nth-child(5) { height: 25px; animation-delay: 0.8s; }
+  
+  .decode-text {
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+  
+  .decode-audio {
+    width: 100%;
+    margin-top: 1rem;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .modular-capsule {
+      padding: 3rem 1rem;
+    }
+    
+    .capsule-title {
+      font-size: 2rem;
+    }
+    
+    .decode-transmission-btn {
+      bottom: 1rem;
+      padding: 0.8rem 1.5rem;
+      font-size: 0.9rem;
+    }
+    
+    .decode-modal-content {
+      width: 95%;
+    }
+  }
+  
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 10px var(--radioactive-green); }
+    50% { box-shadow: 0 0 20px var(--radioactive-green); }
+  }
+  
+  @keyframes rotate-pulse {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.1); }
+  }
+  
+  @keyframes waveform {
+    0%, 100% { transform: scaleY(0.5); }
+    50% { transform: scaleY(1); }
+  }
+</style>
+
+<script>
+  function openDecodeModal(sectionId) {
+    const modal = document.getElementById('decode-modal-' + sectionId);
+    if (modal) {
+      modal.style.display = 'flex';
+      setTimeout(() => {
+        modal.classList.add('active');
+      }, 10);
+      document.body.style.overflow = 'hidden';
+    }
+  }
+  
+  function closeDecodeModal(sectionId) {
+    const modal = document.getElementById('decode-modal-' + sectionId);
+    if (modal) {
+      modal.classList.remove('active');
+      setTimeout(() => {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+      }, 300);
+    }
+  }
+  
+  // Close modal on backdrop click
+  document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('decode-modal')) {
+      const sectionId = e.target.id.replace('decode-modal-', '');
+      closeDecodeModal(sectionId);
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Modular Capsule",
+  "settings": [
+    {
+      "type": "text",
+      "id": "capsule_number",
+      "label": "Capsule number",
+      "default": "001"
+    },
+    {
+      "type": "text",
+      "id": "capsule_title",
+      "label": "Capsule title",
+      "default": "On The Event Horizon"
+    },
+    {
+      "type": "text",
+      "id": "capsule_subtitle",
+      "label": "Capsule subtitle"
+    },
+    {
+      "type": "richtext",
+      "id": "capsule_description",
+      "label": "Capsule description"
+    },
+    {
+      "type": "select",
+      "id": "capsule_status",
+      "label": "Capsule status",
+      "options": [
+        {
+          "value": "ACTIVE",
+          "label": "Active"
+        },
+        {
+          "value": "INCOMING",
+          "label": "Incoming"
+        },
+        {
+          "value": "CLASSIFIED",
+          "label": "Classified"
+        },
+        {
+          "value": "ARCHIVED",
+          "label": "Archived"
+        }
+      ],
+      "default": "ACTIVE"
+    },
+    {
+      "type": "image_picker",
+      "id": "capsule_image",
+      "label": "Capsule image"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Product collection"
+    },
+    {
+      "type": "range",
+      "id": "products_per_row",
+      "label": "Products per row",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "products_limit",
+      "label": "Products to show",
+      "min": 4,
+      "max": 20,
+      "step": 2,
+      "default": 8
+    },
+    {
+      "type": "checkbox",
+      "id": "show_lore",
+      "label": "Show capsule lore",
+      "default": true
+    },
+    {
+      "type": "richtext",
+      "id": "capsule_lore",
+      "label": "Capsule lore content"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_decode_button",
+      "label": "Show decode transmission button",
+      "default": true
+    },
+    {
+      "type": "richtext",
+      "id": "decode_content",
+      "label": "Decode modal content"
+    },
+    {
+      "type": "url",
+      "id": "decode_audio",
+      "label": "Decode audio file URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Modular Capsule"
+    }
+  ]
+}
+{% endschema %}

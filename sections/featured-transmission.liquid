@@ -1,0 +1,38 @@
+{% comment %}
+  Featured Transmission Section
+  Highlights a single capsule/collection
+{% endcomment %}
+<section class="featured-transmission text-center py-16">
+  <div class="container mx-auto">
+    <h2 class="text-3xl md:text-4xl font-orbitron gradient-text mb-6">
+      Featured Transmission
+    </h2>
+    {% if section.settings.featured_collection != blank %}
+      {% assign col = collections[section.settings.featured_collection] %}
+      {% if col and col.products.size > 0 %}
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {% for product in col.products limit:3 %}
+            <div class="product-card bg-black bg-opacity-60 border border-purple-800 rounded-lg p-6">
+              {{ product.featured_image | image_url: width: 600 | image_tag: class: "rounded-md mb-4" }}
+              <h3 class="text-xl font-bold mb-2">{{ product.title }}</h3>
+              <p class="text-gray-400 text-sm mb-4">{{ product.description | strip_html | truncatewords: 15 }}</p>
+              <a href="{{ product.url }}" class="btn-stellar">View Relic</a>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="text-gray-500">No products found in this collection.</p>
+      {% endif %}
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured Transmission",
+  "settings": [
+    { "type": "collection", "id": "featured_collection", "label": "Choose collection" }
+  ],
+  "presets": [{ "name": "Featured Transmission" }]
+}
+{% endschema %}
