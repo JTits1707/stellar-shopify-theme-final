@@ -1,12 +1,27 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
+  "cart": {
+    "general": {
+      "title": "Transmission Cart",
+      "empty": "No relics tuned to this signal yet."
+    }
+  },
   "general": {
-    "meta": {
-      "tags": "Tagged \"{{ tags }}\"",
-      "page": "Page {{ page }}"
-    },
     "404": {
       "title": "Page not found",
       "subtext": "The signal you seek has drifted beyond this frequency."
+    },
+    "meta": {
+      "tags": "Tagged \"{{ tags }}\"",
+      "page": "Page {{ page }}"
     }
   },
   "products": {
@@ -18,20 +33,52 @@
       "almost_gone": "Almost Gone!"
     }
   },
-  "cart": {
-    "general": {
-      "title": "Transmission Cart",
-      "empty": "No relics tuned to this signal yet."
-    }
-  },
   "sections": {
     "announcement": {
-      "text": "\ud83d\ude80 Free shipping on orders over $75"
+      "text": "🚀 Free shipping on orders over $75"
     },
     "footer": {
       "capsules": "Capsules",
       "support": "Support",
       "connect": "Connect"
+    }
+  },
+  "gempages": {
+    "Carousel": {
+      "no_slider": "No Slider"
+    },
+    "Newsletter": {
+      "err_msg_default": "Can’t send email. Please try again later.",
+      "success_msg_default": "Thanks for subscribing"
+    },
+    "IconListV2": {
+      "icons_not_found": "Icons not found"
+    },
+    "IconList": {
+      "icons_not_found": "Icons not found"
+    },
+    "IconListHoz": {
+      "icons_not_found": "Icons not found"
+    },
+    "Product": {
+      "product_not_found": "Product not found"
+    },
+    "ProductList": {
+      "product_not_found": "Product Not Found!",
+      "no_products_found": "No products found!",
+      "no_related_products": "No related products!"
+    },
+    "ProductTitle": {
+      "product_not_found": "Product Not Found"
+    },
+    "ProductVariants": {
+      "please_select": "Please select an option"
+    },
+    "StockCounter": {
+      "let_buy_now": "<mark>HURRY!</mark> LET BUY NOW"
+    },
+    "Breadcrumb": {
+      "home": "Home"
     }
   }
 }
