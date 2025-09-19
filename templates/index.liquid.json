@@ -1,0 +1,25 @@
+{% comment %}
+  Stellar Reverb Homepage — cleaned version
+  Removed/renamed missing sections so editor loads
+{% endcomment %}
+
+<!-- Header -->
+{% section 'header' %}
+
+<!-- Hero -->
+{% section 'hero-cosmic' %}
+{% section 'transmission-status' %}
+<!-- Featured Transmission -->
+{% section 'featured-transmission' %}
+
+<!-- Cosmic Timeline -->
+{% section 'cosmic-timeline' %}
+
+<!-- Floating Archive -->
+{% section 'floating-archive' %}
+
+<!-- Newsletter Signup / Signal Seeker CTA -->
+{% section 'signal-seeker-cta' %}
+
+<!-- Footer -->
+{% section 'footer' %}

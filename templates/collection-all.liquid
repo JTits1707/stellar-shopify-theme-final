@@ -1,0 +1,125 @@
+{% comment %}
+  Stellar Reverb – Cosmic Vault (Shop All Page)
+  Dynamic Shopify collection template with filters, motifs, and sorting
+{% endcomment %}
+{% layout none %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ collection.title | default: "Cosmic Product Vault" }}</title>
+  {{ 'cosmic-enhancements.css' | asset_url | stylesheet_tag }}
+  {{ 'stellar-reverb.css' | asset_url | stylesheet_tag }}
+  {{ 'cosmic-effects.css' | asset_url | stylesheet_tag }}
+  {{ 'floating-elements.css' | asset_url | stylesheet_tag }}
+</head>
+<body class="bg-black text-white">
+
+  <!-- Background cosmic effects -->
+  <div class="cosmic-bg"></div>
+  <div class="geometric-pulse"></div>
+  <div class="geometric-pulse"></div>
+  <div class="constellation"></div>
+
+  <!-- Header -->
+  {% section 'header' %}
+
+  <main class="container mx-auto px-6 py-12">
+
+    <!-- Hero Vault Title -->
+    <section class="text-center mb-16">
+      <h2 class="text-5xl font-bold mb-4 font-orbitron bg-gradient-to-r from-[#E13CFA] to-[#28A8D6] bg-clip-text text-transparent">
+        COSMIC PRODUCT VAULT
+      </h2>
+      <p class="text-xl text-gray-300 mb-8">
+        Shop All Transmissions • Every Capsule • All Frequencies
+      </p>
+    </section>
+
+    <!-- Filter Pills -->
+    <section class="mb-12">
+      <div class="section-header">// TUNE FREQUENCY: CAPSULES //</div>
+      <div class="flex flex-wrap justify-center gap-4 mb-8 filter-pills">
+        <button class="filter-pill active" data-filter="all">All Transmissions</button>
+        <button class="filter-pill" data-filter="capsule-001">Capsule 001</button>
+        <button class="filter-pill" data-filter="capsule-002">Capsule 002</button>
+        <button class="filter-pill" data-filter="capsule-003">Capsule 003</button>
+        <button class="filter-pill" data-filter="capsule-004">Capsule 004</button>
+        <button class="filter-pill" data-filter="signal-seeker">Signal Seeker Exclusives</button>
+      </div>
+
+      <div class="section-header">// ISOLATE SIGNAL: VISUAL MOTIFS //</div>
+      <div class="flex flex-wrap justify-center gap-3 mb-6">
+        <button class="motif-tag" data-tag="cassette">Cassette Glyph</button>
+        <button class="motif-tag" data-tag="fractal">Fractal Echo</button>
+        <button class="motif-tag" data-tag="mythic-tech">Mythic Tech</button>
+        <button class="motif-tag" data-tag="glitch">Glitch Oracle</button>
+      </div>
+
+      <div class="section-header">SORT BY:</div>
+      <div class="flex flex-wrap justify-center gap-3">
+        <button class="sort-pill active" data-sort="resonant">Most Resonant</button>
+        <button class="sort-pill" data-sort="newest">Recently Decoded</button>
+        <button class="sort-pill" data-sort="price-high">High → Low</button>
+        <button class="sort-pill" data-sort="price-low">Low → High</button>
+      </div>
+    </section>
+
+    <!-- Dynamic Product Grid -->
+    <section class="mb-16">
+      <div class="product-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="product-grid">
+        {% for product in collection.products %}
+          <div class="product-card"
+               data-capsule="{{ product.tags | join: ',' | downcase }}"
+               data-price="{{ product.price | divided_by: 100 }}"
+               data-resonant="{{ product.metafields.custom.resonant_score | default: 50 }}">
+            
+            <!-- Capsule Tag -->
+            {% assign capsule_tag = product.tags | where: "contains", "capsule" | first %}
+            {% if capsule_tag %}
+              <div class="capsule-tag">{{ capsule_tag }}</div>
+            {% endif %}
+
+            <!-- Product Image -->
+            <div class="h-64 bg-gradient-to-br from-purple-600 to-blue-600 rounded-lg mb-4 flex items-center justify-center relative overflow-hidden">
+              <a href="{{ product.url }}">
+                <img src="{{ product.featured_image | img_url: '600x600' }}" alt="{{ product.title }}" class="object-cover w-full h-full rounded-lg">
+              </a>
+            </div>
+
+            <!-- Title + Description -->
+            <h3 class="text-xl font-bold mb-2 font-orbitron">{{ product.title }}</h3>
+            <p class="text-gray-400 text-sm mb-3">{{ product.description | strip_html | truncate: 100 }}</p>
+
+            <!-- Price + Badge -->
+            <div class="flex justify-between items-center">
+              <span class="text-2xl font-bold text-cyan-400">{{ product.price | money }}</span>
+              {% if product.tags contains 'limited' %}
+                <span class="limited-badge">LIMITED</span>
+              {% endif %}
+            </div>
+          </div>
+        {% else %}
+          <p class="text-center text-gray-400">No transmissions found in this collection.</p>
+        {% endfor %}
+      </div>
+    </section>
+
+    <!-- Signal Seeker CTA -->
+    <section class="signal-seekers-section">
+      <h2 class="text-4xl font-bold mb-4 font-orbitron text-[#E13CFA]">BECOME A SIGNAL SEEKER</h2>
+      <p class="text-xl text-gray-300 italic mb-6">THE TRUTH IS ENCODED IN THE STATIC.</p>
+      <form class="signal-form">
+        <input type="email" class="signal-input" placeholder="Enter your comms channel (email)..." required>
+        <button class="initiate-btn">[ ESTABLISH CONNECTION ]</button>
+      </form>
+    </section>
+
+  </main>
+
+  {% section 'footer' %}
+
+  {{ 'stellar-reverb.js' | asset_url | script_tag }}
+  {{ 'stellar-timeline.js' | asset_url | script_tag }}
+</body>
+</html>

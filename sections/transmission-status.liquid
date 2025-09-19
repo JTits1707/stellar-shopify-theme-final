@@ -1,0 +1,71 @@
+{% comment %}
+  Stellar Reverb — Transmission Status Section
+  Displays live stats (placeholders for now, replace with metaobjects later)
+{% endcomment %}
+
+<section class="transmission-status bg-black text-center py-12 border-t border-b border-purple-800">
+  <div class="container mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-cyan-400 font-orbitron">
+    
+    <!-- Active Capsules -->
+    <div>
+      <p class="text-4xl font-bold">10</p>
+      <p class="text-sm text-gray-400 uppercase tracking-widest">Active Capsules</p>
+    </div>
+
+    <!-- Decoded Fragments -->
+    <div>
+      <p class="text-4xl font-bold">42</p>
+      <p class="text-sm text-gray-400 uppercase tracking-widest">Decoded Fragments</p>
+    </div>
+
+    <!-- Signal Seekers -->
+    <div>
+      <p class="text-4xl font-bold">1,247</p>
+      <p class="text-sm text-gray-400 uppercase tracking-widest">Signal Seekers</p>
+    </div>
+
+    <!-- Dimensions Mapped -->
+    <div>
+      <p class="text-4xl font-bold">∞</p>
+      <p class="text-sm text-gray-400 uppercase tracking-widest">Dimensions Mapped</p>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Transmission Status",
+  "settings": [
+    {
+      "type": "number",
+      "id": "active_capsules",
+      "label": "Active Capsules",
+      "default": 10
+    },
+    {
+      "type": "number",
+      "id": "decoded_fragments",
+      "label": "Decoded Fragments",
+      "default": 42
+    },
+    {
+      "type": "number",
+      "id": "signal_seekers",
+      "label": "Signal Seekers",
+      "default": 1247
+    },
+    {
+      "type": "text",
+      "id": "dimensions_mapped",
+      "label": "Dimensions Mapped",
+      "default": "∞"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Transmission Status",
+      "category": "Cosmic Sections"
+    }
+  ]
+}
+{% endschema %}
