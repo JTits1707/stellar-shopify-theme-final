@@ -1,4 +1,33 @@
 {% comment %}
+  Placeholder for announcement-bar
+  Replace with custom design later.
+{% endcomment %}
+
+<section class="placeholder-announcement-bar">
+  <div style="padding:20px; text-align:center; background:#0D0D0D; color:#E13CFA; border:1px dashed #28A8D6;">
+    <h2>{{ section.settings.heading | default: "Placeholder: Announcement Bar" }}</h2>
+    <p>This is a placeholder for the announcement-bar section. Customize later.</p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Announcement Bar",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Placeholder for Announcement Bar"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement Bar"
+    }
+  ]
+}
+{% endschema %}{% comment %}
   Stellar Reverb – Announcement Bar
   Use for free shipping, incoming transmissions, capsule teasers, etc.
 {% endcomment %}
