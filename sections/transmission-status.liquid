@@ -1,63 +1,14 @@
 {% comment %}
-  Placeholder for announcement-bar
-  Replace with custom design later.
+  Stellar Reverb — Transmission Status (Placeholder)
 {% endcomment %}
 
-<section class="placeholder-announcement-bar">
-  <div style="padding:20px; text-align:center; background:#0D0D0D; color:#E13CFA; border:1px dashed #28A8D6;">
-    <h2>{{ section.settings.heading | default: "Placeholder: Announcement Bar" }}</h2>
-    <p>This is a placeholder for the announcement-bar section. Customize later.</p>
-  </div>
-</section>
-
-{% schema %}
-{
-  "name": "Announcement Bar",
-  "settings": [
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Heading",
-      "default": "Placeholder for Announcement Bar"
-    }
-  ],
-  "presets": [
-    {
-      "name": "Announcement Bar"
-    }
-  ]
-}
-{% endschema %}{% comment %}
-  Stellar Reverb — Transmission Status Section
-  Displays live stats (placeholders for now, replace with metaobjects later)
-{% endcomment %}
-
-<section class="transmission-status bg-black text-center py-12 border-t border-b border-purple-800">
-  <div class="container mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-cyan-400 font-orbitron">
-    
-    <!-- Active Capsules -->
-    <div>
-      <p class="text-4xl font-bold">10</p>
-      <p class="text-sm text-gray-400 uppercase tracking-widest">Active Capsules</p>
-    </div>
-
-    <!-- Decoded Fragments -->
-    <div>
-      <p class="text-4xl font-bold">42</p>
-      <p class="text-sm text-gray-400 uppercase tracking-widest">Decoded Fragments</p>
-    </div>
-
-    <!-- Signal Seekers -->
-    <div>
-      <p class="text-4xl font-bold">1,247</p>
-      <p class="text-sm text-gray-400 uppercase tracking-widest">Signal Seekers</p>
-    </div>
-
-    <!-- Dimensions Mapped -->
-    <div>
-      <p class="text-4xl font-bold">∞</p>
-      <p class="text-sm text-gray-400 uppercase tracking-widest">Dimensions Mapped</p>
-    </div>
+<section class="transmission-status" style="background:#0D0D0D; padding:30px; text-align:center; color:#28A8D6;">
+  <h2>{{ section.settings.heading | default: "Current Transmission Status" }}</h2>
+  <div style="display:grid; grid-template-columns: repeat(4,1fr); gap:20px; max-width:800px; margin:20px auto;">
+    <div><strong>{{ section.settings.active_capsules }}</strong><p>Active Capsules</p></div>
+    <div><strong>{{ section.settings.decoded_fragments }}</strong><p>Decoded Fragments</p></div>
+    <div><strong>{{ section.settings.signal_seekers }}</strong><p>Signal Seekers</p></div>
+    <div><strong>{{ section.settings.dimensions_mapped }}</strong><p>Dimensions Mapped</p></div>
   </div>
 </section>
 
@@ -92,8 +43,7 @@
   ],
   "presets": [
     {
-      "name": "Transmission Status",
-      "category": "Cosmic Sections"
+      "name": "Transmission Status"
     }
   ]
 }
