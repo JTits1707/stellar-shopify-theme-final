@@ -1,123 +1,31 @@
-[
-  {
-    "name": "General",
-    "settings": [
-      {
-        "type": "color",
-        "id": "color_primary",
-        "label": "Primary Accent",
-        "default": "#E13CFA"
+{
+  "current": "Default",
+  "presets": {
+    "Default": {
+      "sections": {
+        "announcement-bar": {
+          "type": "announcement-bar",
+          "settings": {}
+        },
+        "header": {
+          "type": "header",
+          "settings": {}
+        },
+        "main": {
+          "type": "index",
+          "settings": {}
+        },
+        "footer": {
+          "type": "footer",
+          "settings": {}
+        }
       },
-      {
-        "type": "color",
-        "id": "color_secondary",
-        "label": "Secondary Accent",
-        "default": "#28A8D6"
-      },
-      {
-        "type": "color",
-        "id": "color_background",
-        "label": "Background",
-        "default": "#0D0D0D"
-      },
-      {
-        "type": "font_picker",
-        "id": "heading_font",
-        "label": "Heading Font",
-        "default": "orbitron_n4"
-      },
-      {
-        "type": "font_picker",
-        "id": "body_font",
-        "label": "Body Font",
-        "default": "montserrat_n4"
-      }
-    ]
-  },
-  {
-    "name": "Announcement Bar",
-    "settings": [
-      {
-        "type": "checkbox",
-        "id": "show_announcement",
-        "label": "Enable Announcement Bar",
-        "default": true
-      },
-      {
-        "type": "text",
-        "id": "announcement_text",
-        "label": "Announcement Text",
-        "default": "🚀 FREE SHIPPING ON ORDERS OVER $75"
-      },
-      {
-        "type": "text",
-        "id": "announcement_cta",
-        "label": "CTA Button Text",
-        "default": "Join Signal Seekers"
-      },
-      {
-        "type": "select",
-        "id": "announcement_cta_action",
-        "label": "CTA Action",
-        "options": [
-          { "value": "mailchimp", "label": "Mailchimp Popup" },
-          { "value": "register", "label": "Shopify Register Page" },
-          { "value": "none", "label": "None" }
-        ],
-        "default": "mailchimp"
-      }
-    ]
-  },
-  {
-    "name": "Navigation",
-    "settings": [
-      {
-        "type": "link_list",
-        "id": "main_menu",
-        "label": "Main Menu",
-        "default": "main-menu"
-      },
-      {
-        "type": "link_list",
-        "id": "footer_menu_capsules",
-        "label": "Footer Capsules Menu",
-        "default": "footer-capsules"
-      },
-      {
-        "type": "link_list",
-        "id": "footer_menu_support",
-        "label": "Footer Support Menu",
-        "default": "footer-support"
-      }
-    ]
-  },
-  {
-    "name": "Social",
-    "settings": [
-      {
-        "type": "url",
-        "id": "social_instagram",
-        "label": "Instagram URL",
-        "default": "https://instagram.com"
-      },
-      {
-        "type": "url",
-        "id": "social_twitter",
-        "label": "Twitter/X URL",
-        "default": "https://twitter.com"
-      },
-      {
-        "type": "url",
-        "id": "social_pinterest",
-        "label": "Pinterest URL",
-        "default": "https://pinterest.com"
-      },
-      {
-        "type": "url",
-        "id": "social_youtube",
-        "label": "YouTube URL",
-        "default": "https://youtube.com"
-      }
-    ]
+      "order": [
+        "announcement-bar",
+        "header",
+        "main",
+        "footer"
+      ]
+    }
   }
-]
+}
