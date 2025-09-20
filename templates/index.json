@@ -1,9 +1,41 @@
 {
   "sections": {
-    "main": {
-      "type": "main-page",
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "settings": {}
+    },
+    "header": {
+      "type": "header",
+      "settings": {}
+    },
+    "cosmic-hero": {
+      "type": "cosmic-hero",
+      "settings": {
+        "heading": "Welcome to Stellar Reverb",
+        "subheading": "Transmissions from beyond the singularity",
+        "cta_label": "Enter the Cosmic Vault",
+        "cta_link": "/collections/all-transmissions"
+      }
+    },
+    "capsule-teasers": {
+      "type": "capsule-teasers",
+      "settings": {}
+    },
+    "featured-transmission": {
+      "type": "featured-transmission",
+      "settings": {}
+    },
+    "footer": {
+      "type": "footer",
       "settings": {}
     }
   },
-  "order": ["main"]
+  "order": [
+    "announcement-bar",
+    "header",
+    "cosmic-hero",
+    "capsule-teasers",
+    "featured-transmission",
+    "footer"
+  ]
 }
