@@ -1,0 +1,31 @@
+{
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "settings": {
+        "heading": "FREE SHIPPING ON ORDERS OVER $75"
+      }
+    },
+    "cosmic-network": {
+      "type": "cosmic-network",
+      "settings": {
+        "heading": "COSMIC NETWORK PLACEHOLDER",
+        "subtext": "This section will eventually display networked lore, signals, or community features."
+      }
+    },
+    "transmission-status": {
+      "type": "transmission-status",
+      "settings": {
+        "active_capsules": 10,
+        "decoded_fragments": 42,
+        "signal_seekers": 1247,
+        "dimensions_mapped": "∞"
+      }
+    }
+  },
+  "order": [
+    "announcement-bar",
+    "cosmic-network",
+    "transmission-status"
+  ]
+}

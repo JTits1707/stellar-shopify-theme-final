@@ -1,106 +1,68 @@
-{% comment %} 404 Template - Signal Lost {% endcomment %}
+{% comment %}
+  Stellar Reverb – Custom 404 Page
+  Shows cosmic glitch styling and fallback navigation
+{% endcomment %}
 
+<div class="error-404-wrapper">
+  <div class="error-content">
+    <div class="signal-lost-icon">⚠️</div>
+    <h1 class="signal-lost-text">SIGNAL LOST ERROR: 404</h1>
+    <p class="error-code">The cosmic frequency you’re seeking has drifted beyond our transmission range.</p>
+    <p class="error-code">Recovery Options:</p>
+    <ul class="error-options">
+      <li><a href="/">Return to the Main Transmission Hub</a></li>
+      <li><a href="/collections/all">Explore All Capsules</a></li>
+      <li><a href="/pages/contact">Contact Mission Control</a></li>
+    </ul>
+  </div>
+</div>
 
-  
-    
-      
-        
-          
-          
-        
-      
-      
-      
-        SIGNAL LOST
-        ERROR: 404
-        
-          The cosmic frequency you're seeking has drifted beyond our transmission range. 
-          The page may have been consumed by a digital void or relocated to another dimension.
-        
-        
-        
-          RECOVERY OPTIONS:
-          
-            Recalibrate your navigation coordinates
-            Return to the main transmission hub
-            Explore the complete archive
-            Contact mission control for assistance
-          
-        
-
-        
-          RETURN TO BASE
-          SEARCH FREQUENCIES
-        
-      
-    
-  
-
-
-
-.error-404-wrapper {
-  min-height: 80vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4rem 2rem;
-  background: radial-gradient(circle, rgba(225,60,250,0.1), transparent);
-}
-
-.error-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  max-width: 1000px;
-  align-items: center;
-}
-
-.signal-lost-icon {
-  font-size: 8rem;
-  color: var(--neon-magenta);
-  text-align: center;
-  position: relative;
-  animation: signal-interference 2s ease-in-out infinite;
-}
-
-.glitch-lines {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(90deg, transparent 48%, var(--cyan-blue) 49%, var(--cyan-blue) 51%, transparent 52%);
-  opacity: 0.3;
-  animation: glitch-scan 1.5s linear infinite;
-}
-
-@keyframes signal-interference {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-2px); }
-  50% { transform: translateX(2px); }
-  75% { transform: translateX(-1px); }
-}
-
-@keyframes glitch-scan {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100%); }
-}
-
-.error-title {
-  font-family: 'Orbitron', monospace;
-  font-size: 3rem;
-  margin-bottom: 1rem;
-}
-
-.error-code {
-  color: var(--radioactive-green);
-  font-family: 'Orbitron', monospace;
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
-}
-
-@media (max-width: 768px) {
-  .error-content { grid-template-columns: 1fr; text-align: center; }
-  .signal-lost-icon { font-size: 4rem; }
-  .error-title { font-size: 2rem; }
-}
+<style>
+  .error-404-wrapper {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    background: radial-gradient(circle, rgba(225,60,250,0.1), transparent);
+  }
+  .error-content {
+    text-align: center;
+    max-width: 700px;
+    color: #fff;
+    font-family: 'Orbitron', monospace;
+  }
+  .signal-lost-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+  }
+  .signal-lost-text {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, #E13CFA, #28A8D6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .error-code {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    color: #ccc;
+  }
+  .error-options {
+    list-style: none;
+    padding: 0;
+    margin-top: 1.5rem;
+  }
+  .error-options li {
+    margin: 0.5rem 0;
+  }
+  .error-options a {
+    color: #00F0AC;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  .error-options a:hover {
+    color: #E13CFA;
+  }
+</style>
