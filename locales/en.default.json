@@ -14,35 +14,6 @@
       "empty": "No relics tuned to this signal yet."
     }
   },
-  "general": {
-    "404": {
-      "title": "Page not found",
-      "subtext": "The signal you seek has drifted beyond this frequency."
-    },
-    "meta": {
-      "tags": "Tagged \"{{ tags }}\"",
-      "page": "Page {{ page }}"
-    }
-  },
-  "products": {
-    "product": {
-      "sold_out": "Sold Out",
-      "add_to_cart": "Acquire Relic",
-      "unavailable": "Unavailable",
-      "low_stock": "Only {{ count }} left",
-      "almost_gone": "Almost Gone!"
-    }
-  },
-  "sections": {
-    "announcement": {
-      "text": "🚀 Free shipping on orders over $75"
-    },
-    "footer": {
-      "capsules": "Capsules",
-      "support": "Support",
-      "connect": "Connect"
-    }
-  },
   "gempages": {
     "Carousel": {
       "no_slider": "No Slider"
@@ -79,6 +50,35 @@
     },
     "Breadcrumb": {
       "home": "Home"
+    }
+  },
+  "general": {
+    "404": {
+      "title": "Page not found",
+      "subtext": "The signal you seek has drifted beyond this frequency."
+    },
+    "meta": {
+      "tags": "Tagged \"{{ tags }}\"",
+      "page": "Page {{ page }}"
+    }
+  },
+  "products": {
+    "product": {
+      "sold_out": "Sold Out",
+      "add_to_cart": "Acquire Relic",
+      "unavailable": "Unavailable",
+      "low_stock": "Only {{ count }} left",
+      "almost_gone": "Almost Gone!"
+    }
+  },
+  "sections": {
+    "announcement": {
+      "text": "🚀 Free shipping on orders over $75"
+    },
+    "footer": {
+      "capsules": "Capsules",
+      "support": "Support",
+      "connect": "Connect"
     }
   }
 }
