@@ -1,217 +1,64 @@
 {% comment %}
-  Stellar Reverb – Transmission Archive (v3 GOLD)
-  Features:
-  • Metaobject-driven capsule archive
-  • Status filters (Active / Incoming / Collapsed / Encrypted)
-  • Live search filter
-  • FOMO badges (based on relic counts)
-  • Encrypted capsules (locked state for non-Signal Seekers)
-  • “Join Signal Seekers” CTA (toggle: Mailchimp popup OR Register)
-  • Capsule Tag Icon support
+  Transmission Archive Section
+  Restricted content for Signal Seekers
 {% endcomment %}
 
-<section class="transmission-archive">
-  <header class="archive-header">
-    <h1>// TRANSMISSION ARCHIVE //</h1>
-    <p class="archive-intro">
-      All decoded broadcasts. Some transmissions remain encrypted — available only to Signal Seekers.
-    </p>
-  </header>
+<section class="transmission-archive py-12 bg-black text-white">
+  <div class="container mx-auto">
+    <h2 class="text-3xl font-orbitron text-cyan-400 mb-6">Transmission Archive</h2>
 
-  <!-- Filters + Search -->
-  <div class="archive-filters">
-    <div class="status-filters">
-      <button class="filter-pill active" data-status="all">All</button>
-      <button class="filter-pill" data-status="active">Active</button>
-      <button class="filter-pill" data-status="incoming">Incoming</button>
-      <button class="filter-pill" data-status="collapsed">Collapsed</button>
-      <button class="filter-pill" data-status="encrypted">Encrypted</button>
-    </div>
-    <div class="search-filter">
-      <input type="text" id="archive-search" placeholder="Search capsules…" />
-    </div>
-  </div>
-
-  <!-- Archive Grid -->
-  <div class="archive-grid" id="archive-grid">
-    {% assign capsules = shop.metaobjects['capsule'].values | sort: "capsule_number" %}
-    {% for cap in capsules %}
-      {% assign col = cap.capsule_collection %}
-      {% assign status = cap.capsule_status | default: 'incoming' | downcase %}
-      {% assign encrypted = cap.capsule_encrypted | default: false %}
-
-      <article class="archive-card {% if encrypted %}status-encrypted{% else %}status-{{ status }}{% endif %}">
-        {% if encrypted and (customer == blank or customer.tags contains 'signal-seeker' == false) %}
-          <!-- 🔒 Locked Capsule View -->
-          <div class="archive-media locked">
-            <div class="placeholder-glyph">🔒</div>
-            <span class="status-badge">Encrypted</span>
+    {% if encrypted and (customer == blank or not customer.tags contains 'signal-seeker') %}
+      <div class="locked-archive text-center py-12 border border-cyan-400 rounded-lg">
+        <p class="mb-4">This transmission is encrypted. Only Signal Seekers may access.</p>
+        <a href="/account/login" class="btn btn--primary">Sign in to Decode</a>
+      </div>
+    {% else %}
+      <div class="archive-grid grid grid-cols-1 md:grid-cols-3 gap-6">
+        {% for block in section.blocks %}
+          <div class="archive-item p-6 border border-purple-600 rounded-lg">
+            <h3 class="font-bold mb-2">{{ block.settings.title }}</h3>
+            <p class="text-gray-300">{{ block.settings.description }}</p>
           </div>
-          <div class="archive-content">
-            {% if cap.capsule_tag_icon %}
-              <img src="{{ cap.capsule_tag_icon | image_url: width: 60 }}" alt="Capsule {{ cap.capsule_number }} tag" class="inline-block mb-2" />
-            {% endif %}
-            <h2>Capsule {{ cap.capsule_number }} — Transmission Locked</h2>
-            <p class="tagline">Signal Seeker Access Required</p>
-            <p class="lore-snippet">This transmission is encrypted. Join the Signal Seekers to decode its contents.</p>
-            <div class="fomo-badge faded">🔑 Restricted Broadcast</div>
-
-            {% if section.settings.join_action == 'mailchimp' %}
-              <button class="join-seekers-btn" data-mailchimp-popup>Join Signal Seekers</button>
-            {% else %}
-              <a href="/account/register" class="join-seekers-btn">Join Signal Seekers</a>
-            {% endif %}
-          </div>
-        {% else %}
-          <!-- 🌌 Normal Capsule View -->
-          <a href="{{ col.url | default: '#' }}">
-            <div class="archive-media">
-              {% if cap.capsule_image %}
-                {{ cap.capsule_image | image_url: width: 600 | image_tag: alt: cap.capsule_title }}
-              {% else %}
-                <div class="placeholder-glyph">🎛</div>
-              {% endif %}
-              <span class="status-badge">{{ encrypted ? 'Encrypted' : cap.capsule_status }}</span>
-            </div>
-            <div class="archive-content">
-              {% if cap.capsule_tag_icon %}
-                <img src="{{ cap.capsule_tag_icon | image_url: width: 60 }}" alt="Capsule {{ cap.capsule_number }} tag" class="inline-block mb-2" />
-              {% endif %}
-              <h2>Capsule {{ cap.capsule_number }} — {{ cap.capsule_title }}</h2>
-              <p class="tagline">{{ cap.capsule_tagline }}</p>
-              <p class="lore-snippet">{{ cap.capsule_lore_intro | strip_html | truncatewords: 25 }}</p>
-
-              {% if col and col.products_count > 0 %}
-                <div class="fomo-badge">
-                  {% if col.products_count <= 5 %}
-                    ⚠ Only {{ col.products_count }} relics left — Acquire before collapse!
-                  {% else %}
-                    🔊 Relics available — transmission still live
-                  {% endif %}
-                </div>
-              {% else %}
-                <div class="fomo-badge faded">⏳ Awaiting signal reactivation</div>
-              {% endif %}
-            </div>
-          </a>
-        {% endif %}
-      </article>
-    {% endfor %}
+        {% endfor %}
+      </div>
+    {% endif %}
   </div>
 </section>
-
-<style>
-.transmission-archive { padding: 4rem 2rem; background: #0D0D0D; color: #fff; }
-.archive-header { text-align: center; margin-bottom: 3rem; }
-.archive-header h1 {
-  font-family: Orbitron, sans-serif;
-  font-size: clamp(2rem, 4vw, 3rem);
-  background: linear-gradient(90deg,#E13CFA,#28A8D6);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-}
-.archive-intro { color:#aaa; max-width:650px; margin:0 auto; }
-.archive-filters { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:2rem; }
-.status-filters { display:flex; gap:.5rem; flex-wrap:wrap; }
-.filter-pill {
-  border:1px solid #28A8D6; background:rgba(40,168,214,.1);
-  color:#28A8D6; border-radius:999px; padding:.4rem 1rem;
-  cursor:pointer; transition:all .3s ease; font-size:.85rem;
-}
-.filter-pill.active, .filter-pill:hover { background:#28A8D6; color:#0D0D0D; box-shadow:0 0 10px #28A8D6; }
-.search-filter input {
-  background:rgba(20,20,30,.8); border:1px solid #2a2a40;
-  border-radius:20px; padding:.5rem 1rem; color:#fff; min-width:200px;
-}
-.archive-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:2rem; }
-.archive-card { background:rgba(30,30,50,.7); border:1px solid #2a2a40; border-radius:12px; overflow:hidden; transition:transform .3s ease, box-shadow .3s ease; }
-.archive-card:hover { transform:translateY(-6px); box-shadow:0 0 25px rgba(225,60,250,.3); }
-.archive-media { position:relative; }
-.archive-media img { width:100%; display:block; }
-.status-badge {
-  position:absolute; top:10px; left:10px; font-size:.7rem;
-  padding:.25rem .5rem; border-radius:8px; text-transform:uppercase;
-  background:#6C24B3; color:#fff;
-}
-.archive-card.status-active .status-badge { background:#00F0AC; }
-.archive-card.status-incoming .status-badge { background:#FFE135; color:#000; }
-.archive-card.status-collapsed .status-badge { background:#E13CFA; }
-.archive-card.status-encrypted .status-badge { background:#444; }
-.archive-content { padding:1rem; }
-.archive-content h2 { font-size:1.25rem; margin-bottom:.5rem; font-family:Orbitron,sans-serif; }
-.tagline { color:#28A8D6; margin-bottom:.5rem; font-style:italic; }
-.lore-snippet { color:#bbb; margin-bottom:1rem; }
-.fomo-badge { font-size:.85rem; font-weight:600; border-radius:6px; padding:.3rem .6rem; background:rgba(225,60,250,.15); color:#E13CFA; }
-.fomo-badge.faded { opacity:.5; }
-.archive-card .locked { display:flex; justify-content:center; align-items:center; height:200px; background:rgba(20,20,30,.9); border-bottom:1px solid #2a2a40; font-size:2rem; color:#aaa; }
-.join-seekers-btn {
-  display:inline-block; margin-top:1rem; padding:.6rem 1.2rem; border-radius:999px;
-  font-family:Orbitron, sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:1px;
-  background:linear-gradient(135deg,#E13CFA,#6C24B3); color:#fff; transition:all .3s ease;
-}
-.join-seekers-btn:hover {
-  background:linear-gradient(135deg,#28A8D6,#00F0AC); color:#0D0D0D;
-  box-shadow:0 0 20px rgba(225,60,250,.4);
-}
-</style>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const cards = document.querySelectorAll('.archive-card');
-  const statusBtns = document.querySelectorAll('.filter-pill');
-  const searchInput = document.getElementById('archive-search');
-  let currentStatus = 'all';
-
-  statusBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      statusBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      currentStatus = btn.dataset.status;
-      applyFilters();
-    });
-  });
-
-  searchInput.addEventListener('input', () => applyFilters());
-
-  function applyFilters() {
-    const query = searchInput.value.toLowerCase();
-    cards.forEach(card => {
-      const matchesStatus = currentStatus === 'all' || card.classList.contains(`status-${currentStatus}`);
-      const matchesSearch = card.innerText.toLowerCase().includes(query);
-      card.style.display = (matchesStatus && matchesSearch) ? 'block' : 'none';
-    });
-  }
-
-  // Mailchimp popup trigger
-  document.querySelectorAll('[data-mailchimp-popup]').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (typeof window.MAILCHIMP_POPUP !== 'undefined') {
-        window.MAILCHIMP_POPUP.open();
-      } else {
-        alert('Signal Seeker signup coming soon.');
-      }
-    });
-  });
-});
-</script>
 
 {% schema %}
 {
   "name": "Transmission Archive",
   "settings": [
     {
-      "type": "select",
-      "id": "join_action",
-      "label": "Join CTA Action",
-      "options": [
-        { "value": "register", "label": "Shopify Account (Register page)" },
-        { "value": "mailchimp", "label": "Mailchimp Popup" }
-      ],
-      "default": "mailchimp"
+      "type": "checkbox",
+      "id": "encrypted",
+      "label": "Require Signal Seeker Access",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "transmission",
+      "name": "Transmission",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description"
+        }
+      ]
     }
   ],
   "presets": [
-    { "name": "Transmission Archive", "category": "Stellar Reverb" }
+    {
+      "name": "Transmission Archive",
+      "category": "Custom"
+    }
   ]
 }
 {% endschema %}

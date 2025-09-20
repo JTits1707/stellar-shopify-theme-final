@@ -1,3 +1,40 @@
-{%- for product in section.settings.collection.products | limit: section.settings.products_to_show -%}
-  <!-- render card here -->
-{%- endfor -%}
+{% comment %}
+  Main Collection Product Grid Section
+{% endcomment %}
+
+<div class="collection-grid container mx-auto py-8">
+  {% if section.settings.collection %}
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      {% for product in collections[section.settings.collection].products limit: section.settings.products_to_show %}
+        {% render 'product-card', product: product %}
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="text-center text-gray-400">No collection selected.</p>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Collection Product Grid",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "number",
+      "id": "products_to_show",
+      "label": "Number of products to show",
+      "default": 8
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Product Grid",
+      "category": "Products"
+    }
+  ]
+}
+{% endschema %}
