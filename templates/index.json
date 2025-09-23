@@ -18,7 +18,7 @@
     "header": {
       "type": "header",
       "settings": {
-        "logo_width": 150,
+        "logo_width": 300,
         "menu": "main-menu",
         "enable_search": true,
         "enable_cart_icon": true
