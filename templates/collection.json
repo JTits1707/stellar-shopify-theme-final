@@ -31,10 +31,24 @@
             "link_url": "",
             "link_text": "DECODE"
           }
+        },
+        "timeline_event_RkBXVJ": {
+          "type": "timeline_event",
+          "settings": {
+            "date": "2024.01",
+            "title": "TRANSMISSION 002: PAST THE SINGULARITY",
+            "description": "The first signal breaks through the cosmic void. Reality bends at the edge of perception.",
+            "hashtags": "EventHorizon, FirstTransmission, CosmicAwakening",
+            "icon": "fas fa-rocket",
+            "event_type": "past",
+            "link_url": "",
+            "link_text": "DECODE"
+          }
         }
       },
       "block_order": [
-        "timeline_event_iEJkVb"
+        "timeline_event_iEJkVb",
+        "timeline_event_RkBXVJ"
       ],
       "name": "Cosmic Timeline",
       "settings": {
