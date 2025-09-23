@@ -9,13 +9,7 @@
  */
 {
   "current": {
-    "blocks": {
-      "6478312753674380289": {
-        "disabled": false,
-        "settings": {},
-        "type": "shopify://apps/gempages-builder/blocks/embed-gp-script-head/20b379d4-1b20-474c-a6ca-665c331919f3"
-      }
-    },
+    "show_announcement": false,
     "order": [
       "announcement-bar",
       "header",
@@ -29,10 +23,30 @@
       },
       "header": {
         "type": "header",
-        "settings": {}
+        "settings": {
+          "logo_width": 150,
+          "menu": "main-menu",
+          "enable_search": true,
+          "enable_cart_icon": true
+        }
       },
       "footer": {
         "type": "footer",
+        "settings": {
+          "show_newsletter": true,
+          "newsletter_title": "JOIN THE SIGNAL SEEKERS",
+          "newsletter_subtitle": "Unlock the cosmic frequencies",
+          "show_social_icons": true,
+          "show_payment_icons": true,
+          "copyright_text": "© 2025 Stellar Reverb • Sound. Style. Transmissions of Cosmic Identity."
+        }
+      }
+    },
+    "content_for_index": [],
+    "blocks": {
+      "6478312753674380289": {
+        "type": "shopify://apps/gempages-builder/blocks/embed-gp-script-head/20b379d4-1b20-474c-a6ca-665c331919f3",
+        "disabled": false,
         "settings": {}
       }
     }
