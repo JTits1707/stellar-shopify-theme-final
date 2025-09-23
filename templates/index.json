@@ -46,10 +46,21 @@
             "cta_link": "",
             "cta_text": "Learn More"
           }
+        },
+        "teaser_8BGeQc": {
+          "type": "teaser",
+          "settings": {
+            "image": "shopify://shop_images/capsule010-image-tag_7ac8022f-eea7-44db-9f73-9afb19aa3267.jpg",
+            "title": "INCOMING TRANSMISSION",
+            "subtitle": "DECRYPTING 23%",
+            "cta_link": "",
+            "cta_text": "Learn More"
+          }
         }
       },
       "block_order": [
-        "teaser_nMnLxm"
+        "teaser_nMnLxm",
+        "teaser_8BGeQc"
       ],
       "settings": {}
     },
