@@ -15,9 +15,18 @@
         "collection": "capsule-008-glitchwave-oracle",
         "products_to_show": 8
       }
+    },
+    "cosmic_timeline_ejMW8K": {
+      "type": "cosmic-timeline",
+      "name": "Cosmic Timeline",
+      "settings": {
+        "title": "COSMIC TRANSMISSION TIMELINE",
+        "subtitle": "Journey through the frequencies of space and time"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "cosmic_timeline_ejMW8K"
   ]
 }
