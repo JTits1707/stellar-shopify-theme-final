@@ -1,20 +1,36 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "announcement-bar": {
       "type": "announcement-bar",
-      "settings": {}
+      "settings": {
+        "text": "🚀 Placeholder: Free Shipping on Orders Over $75"
+      }
     },
     "header": {
       "type": "header",
-      "settings": {}
+      "settings": {
+        "logo_width": 150,
+        "menu": "main-menu",
+        "enable_search": true,
+        "enable_cart_icon": true
+      }
     },
     "cosmic-hero": {
       "type": "cosmic-hero",
       "settings": {
-        "heading": "Welcome to Stellar Reverb",
-        "subheading": "Transmissions from beyond the singularity",
-        "cta_label": "Enter the Cosmic Vault",
-        "cta_link": "/collections/all-transmissions"
+        "title": "TRANSMISSION RECEIVED",
+        "subtitle": "Sound. Style. Transmissions of Cosmic Identity.",
+        "cta_link": "/collections/all-transmissions",
+        "cta_text": "EXPLORE THE VAULT"
       }
     },
     "capsule-teasers": {
@@ -23,11 +39,21 @@
     },
     "featured-transmission": {
       "type": "featured-transmission",
-      "settings": {}
+      "settings": {
+        "featured_collection": "capsule-008-glitchwave-oracle"
+      }
     },
     "footer": {
       "type": "footer",
-      "settings": {}
+      "disabled": true,
+      "settings": {
+        "show_newsletter": true,
+        "newsletter_title": "JOIN THE SIGNAL SEEKERS",
+        "newsletter_subtitle": "Unlock the cosmic frequencies",
+        "show_social_icons": true,
+        "show_payment_icons": true,
+        "copyright_text": "© 2025 Stellar Reverb • Sound. Style. Transmissions of Cosmic Identity."
+      }
     }
   },
   "order": [
