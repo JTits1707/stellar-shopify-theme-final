@@ -24,7 +24,7 @@
       "header": {
         "type": "header",
         "settings": {
-          "logo_width": 150,
+          "logo_width": 300,
           "menu": "main-menu",
           "enable_search": true,
           "enable_cart_icon": true
@@ -74,5 +74,20 @@
         }
       }
     }
+  },
+  "platform_customizations": {
+    "custom_css": [
+      "/* Shared badges (matches capsule v3.2) */.relic-badge {font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; border: 1px solid #2a2a40; padding: 4px 8px; border-radius: 999px;}",
+      ".badge-sale {border-color: var(--sr-magenta, #e13cfa); color: var(--sr-magenta, #e13cfa);}",
+      ".badge-low {border-color: var(--sr-yellow, #f4ff30); color: var(--sr-yellow, #f4ff30);}",
+      "@media (prefers-reduced-motion: no-preference) {.badge-low {animation: sr-pulse 1.8s ease-in-out infinite; } @keyframes sr-pulse {0%, 100% {box-shadow: 0 0 0 0 rgba(244, 255, 48, 0.35); } 50% {box-shadow: 0 0 0 10px rgba(244, 255, 48, 0); } }}",
+      " /* Simple card styles (tweak to your grid) */.sr-product-card {display: flex; flex-direction: column; gap: 10px; background: rgba(15, 15, 25, 0.6); border: 1px solid #2a2a40; border-radius: 10px; padding: 12px;}",
+      ".sr-card-image img {width: 100%; height: auto; border-radius: 8px; display: block;}",
+      ".sr-card-title {color: #f0f0f0; text-decoration: none; font-weight: 600;}",
+      ".sr-price-row {display: flex; align-items: center; gap: 10px;}",
+      ".sr-price {font-weight: 700;}",
+      ".sr-compare {text-decoration: line-through; opacity: 0.6;}",
+      ".sr-lowstock-line {margin-top: 6px;}"
+    ]
   }
 }
