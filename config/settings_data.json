@@ -10,6 +10,7 @@
 {
   "current": {
     "show_announcement": false,
+    "color_secondary": "{{ shop.brand.colors.primary[0].foreground }}",
     "order": [
       "announcement-bar",
       "header",
