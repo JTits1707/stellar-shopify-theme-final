@@ -15,7 +15,7 @@
         "ai_gen_block_f4105a7_jDaJVp": {
           "type": "ai_gen_block_f4105a7",
           "settings": {
-            "image": "shopify://shop_images/homepage-hero-image-stellar-reverb.jpg",
+            "image": "shopify:\/\/shop_images\/homepage-hero-image-stellar-reverb.jpg",
             "show_overlay": false,
             "overlay_color": "#000000",
             "overlay_opacity": 30,
@@ -31,7 +31,7 @@
             "subheading_color": "#ffffff",
             "subheading_size": 18,
             "button_text": "Shop now",
-            "button_link": "shopify://collections/frontpage",
+            "button_link": "shopify:\/\/collections\/frontpage",
             "button_color": "#3cfa96",
             "button_hover_color": "#28d6b8",
             "button_text_color": "#ffffff",
@@ -68,7 +68,7 @@
       "settings": {
         "title": "Stellar Reverb",
         "subtitle": "Sound. Style. Transmissions of Cosmic Identity.",
-        "cta_link": "shopify://collections/frontpage",
+        "cta_link": "shopify:\/\/collections\/frontpage",
         "cta_text": "EXPLORE THE VAULT"
       }
     },
@@ -78,7 +78,7 @@
         "teaser_nMnLxm": {
           "type": "teaser",
           "settings": {
-            "image": "shopify://shop_images/capsule009-image-tag_5c15c1eb-e18d-4ce5-8783-3d6c7ef1ba38.jpg",
+            "image": "shopify:\/\/shop_images\/capsule009-image-tag_5c15c1eb-e18d-4ce5-8783-3d6c7ef1ba38.jpg",
             "title": "INCOMING TRANSMISSION",
             "subtitle": "DECRYPTING 54%",
             "cta_link": "",
@@ -88,7 +88,7 @@
         "teaser_8BGeQc": {
           "type": "teaser",
           "settings": {
-            "image": "shopify://shop_images/capsule010-image-tag_7ac8022f-eea7-44db-9f73-9afb19aa3267.jpg",
+            "image": "shopify:\/\/shop_images\/capsule010-image-tag_7ac8022f-eea7-44db-9f73-9afb19aa3267.jpg",
             "title": "INCOMING TRANSMISSION",
             "subtitle": "DECRYPTING 23%",
             "cta_link": "",
