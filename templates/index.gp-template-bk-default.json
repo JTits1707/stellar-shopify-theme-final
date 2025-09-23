@@ -8,6 +8,34 @@
  * ------------------------------------------------------------
  */
 {
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "settings": {}
+    },
+    "header": {
+      "type": "header",
+      "settings": {}
+    },
+    "cosmic-hero": {
+      "type": "cosmic-hero",
+      "settings": {
+        "cta_link": "/collections/all-transmissions"
+      }
+    },
+    "capsule-teasers": {
+      "type": "capsule-teasers",
+      "settings": {}
+    },
+    "featured-transmission": {
+      "type": "featured-transmission",
+      "settings": {}
+    },
+    "footer": {
+      "type": "footer",
+      "settings": {}
+    }
+  },
   "order": [
     "announcement-bar",
     "header",
@@ -15,33 +43,5 @@
     "capsule-teasers",
     "featured-transmission",
     "footer"
-  ],
-  "sections": {
-    "announcement-bar": {
-      "settings": {},
-      "type": "announcement-bar"
-    },
-    "capsule-teasers": {
-      "settings": {},
-      "type": "capsule-teasers"
-    },
-    "cosmic-hero": {
-      "settings": {
-        "cta_link": "/collections/all-transmissions"
-      },
-      "type": "cosmic-hero"
-    },
-    "featured-transmission": {
-      "settings": {},
-      "type": "featured-transmission"
-    },
-    "footer": {
-      "settings": {},
-      "type": "footer"
-    },
-    "header": {
-      "settings": {},
-      "type": "header"
-    }
-  }
+  ]
 }
