@@ -16,7 +16,7 @@
           "type": "ai_gen_block_f4105a7",
           "settings": {
             "image": "shopify://shop_images/homepage-hero-image-stellar-reverb.jpg",
-            "show_overlay": false,
+            "show_overlay": true,
             "overlay_color": "#000000",
             "overlay_opacity": 30,
             "height_desktop": 600,
