@@ -9,15 +9,8 @@
  */
 {
   "current": {
-    "blocks": {
-      "6478312753674380289": {
-        "disabled": false,
-        "settings": {},
-        "type": "shopify://apps/gempages-builder/blocks/embed-gp-script-head/20b379d4-1b20-474c-a6ca-665c331919f3"
-      }
-    },
+    "show_announcement": false,
     "color_secondary": "{{ shop.brand.colors.primary[0].foreground }}",
-    "content_for_index": [],
     "order": [
       "announcement-bar",
       "header",
@@ -50,7 +43,14 @@
         }
       }
     },
-    "show_announcement": false
+    "content_for_index": [],
+    "blocks": {
+      "6478312753674380289": {
+        "type": "shopify://apps/gempages-builder/blocks/embed-gp-script-head/20b379d4-1b20-474c-a6ca-665c331919f3",
+        "disabled": false,
+        "settings": {}
+      }
+    }
   },
   "platform_customizations": {
     "custom_css": [
